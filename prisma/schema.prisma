@@ -14,8 +14,8 @@ model books {
   description  String?
   price        Decimal? @db.Decimal
   publisher    String?
-  imgUrl       String?
   publish_date String?  @map("publish date")
+  genre        String?
   cart         cart[]
 }
 
