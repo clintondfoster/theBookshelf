@@ -1,10 +1,12 @@
-
+import { Routes, Route } from "react-router-dom";
+import Search from "./components/Search";
 
 function App() {
-
   return (
     <div className="App">
-      <h1>hello</h1>
+      <Routes>
+        <Route path="/search-results" element={<Search />} />
+      </Routes>
     </div>
   );
 }

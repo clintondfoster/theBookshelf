@@ -1,0 +1,10 @@
+@media (min-width: 990px) {
+    .d-flex {
+        width: 1000px; 
+    }
+}
+
+.logo:hover{
+    color: gainsboro;
+    cursor: pointer;
+}
