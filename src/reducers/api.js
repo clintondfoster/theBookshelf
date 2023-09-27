@@ -3,7 +3,15 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const storeApi = createApi({
     tagTypes: ["books"],
     reducerPath: "booksApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/",
+    prepareHeaders: (headers, { getState }) => {
+      const token = window.sessionStorage.getItem("token");
+      if (token) {
+        headers.set("Authorization", `Bearer${token}`);
+      }
+      return headers;
+    } 
+  }),
     endpoints: (builder) => ({
       getBooks: builder.query({
         query: () => "api/books",

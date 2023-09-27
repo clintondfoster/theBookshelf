@@ -9,10 +9,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { showResult } from "../reducers/searchSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useLogoutMutation } from "../reducers/authSlice";
+
+
 
 function NavBar() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
+
+  const user = useSelector((state)=> state.auth.credentials.user || "")
+  const [logout] = useLogoutMutation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,7 +43,7 @@ function NavBar() {
   }
 
   const accountClick = () => {
-    navigate('/account')
+    navigate('/auth')
   }
 
   return (
@@ -87,6 +95,11 @@ function NavBar() {
             </Form>
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
+            <div>
+              {user.userId && <h1>Welcome {user.userId}</h1>}
+              {user.userId && <button onClick={logout}>Logout</button>}
+            </div>
+  
           </Nav>
         </Navbar.Collapse>
       </Container>
