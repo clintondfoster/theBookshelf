@@ -5,7 +5,8 @@ import searchReducer from './src/reducers/searchSlice'
 const store = configureStore({
   reducer: {
     [storeApi.reducerPath]: storeApi.reducer,
-    search: searchReducer
+    search: searchReducer,
+    // auth: authReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(storeApi.middleware),
