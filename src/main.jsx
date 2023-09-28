@@ -7,6 +7,7 @@ import App from "./App";
 import "./index.css";
 import NavBar from "./components/Nav";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from "./components/Footer";
 
 
 
@@ -15,7 +16,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter> 
     <Provider store={store}> 
     <NavBar/> 
-    <App/> 
+    <App/>
+    <Footer/>
     </Provider>
     </BrowserRouter>
   </React.StrictMode>
