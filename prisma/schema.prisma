@@ -36,6 +36,9 @@ model order {
   user          users           @relation(fields: [userId], references: [id])
   order_products order_product[]
   isFulfilled  Boolean @default(false)
+
+  
+  // false = active cart
 }
 
 model users {

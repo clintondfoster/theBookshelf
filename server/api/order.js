@@ -1,35 +1,38 @@
 const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
-const prismaClient = new PrismaClient();
+const prisma = new PrismaClient();
 
 
-
-
-router.post("/order", async (req, res, next) => {
-
-
+// get all
+router.get("/", async (req,res,next)=>{
 	try{
-		const getOrder = await prismaClient.cart.find({
-		  where:{
-			userId
-		  }	
-	  
-		});
-	  
-		const createOrder = await prismaClient.order.create({
-		  data:{
-			bookId,
-			orderId,
-			price,
-		  }
-		})
-	  res.send(createOrder);
-	  
-	  }catch(err){
+		// 
+	res.send("test")
+
+	// res.send(allOrders)
+	}catch(err){
 		next(err);
-	  }  
-	  
-	  });
+	}
+})
+
+
+// add an order
+router.post("/", async (req,res,next)=>{
+	try{
+		const createOrder = await prisma.order.create({
+			data: req.body
+		})
+
+		res.send(createOrder)
+	}catch(err){
+		next(err);
+	}
+})
+
+
+
+
+
 	  
 module.exports = router;
