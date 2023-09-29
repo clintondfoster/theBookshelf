@@ -14,12 +14,12 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
     try {
-      const book = await prisma.books.findUnique({
+      const bookId = await prisma.books.findUnique({
         where: {
           id: Number(req.params.id),
         },
       });
-      res.send(book);
+      res.send(bookId);
     } catch (err) {
       next(err);
     }

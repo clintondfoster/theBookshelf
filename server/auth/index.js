@@ -4,6 +4,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authorization = require("../middleware");
 
 //Register new User
 router.post("/register", async (req, res, next) => {
@@ -76,7 +77,7 @@ router.post("/register", async (req, res, next) => {
   });
 
 
-  router.get("/me", async (req, res,next)=>{
+  router.get("/me", authorization, async (req, res,next)=>{
     if(!req.user){
         return res.send({})
     }
@@ -90,5 +91,6 @@ router.post("/register", async (req, res, next) => {
         next(err)
     }
 });
+
 
 module.exports = router;

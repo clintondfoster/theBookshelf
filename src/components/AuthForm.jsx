@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLoginMutation, useRegisterMutation } from "../reducers/authSlice"
 import TextInput from "./inputs/TextInput";
+import { useNavigate } from "react-router-dom";
 
 //Auth Form allows a user to either login or register for an account
 function AuthForm() {
@@ -19,6 +20,7 @@ function AuthForm() {
       : "Already have an account?";
     const oppositeAuthType = isLogin ? "Register" : "Login";
 
+    const navigate = useNavigate();
 
     //Send Credentials to server for Authentication 
     async function attemptAuth(event) {
@@ -30,10 +32,16 @@ function AuthForm() {
     
         try {
           setLoading(true);
-          await authMethod(credentials).unwrap();
+          const result = await authMethod(credentials).unwrap();
+
+          if (result && result.user && result.user.userId) {
+            navigate(`/profile/${result.user.userId}`);
+            } else {
+            throw new Error('User data not recieved');
+            } 
         } catch (error) {
-          setLoading(false);
-          setError(error.data);
+            setLoading(false);
+            setError(error.data || error.message);
         }
       }
 

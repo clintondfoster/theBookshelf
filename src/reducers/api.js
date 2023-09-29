@@ -7,7 +7,7 @@ export const storeApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = window.sessionStorage.getItem("token");
       if (token) {
-        headers.set("Authorization", `Bearer${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     } 
@@ -42,6 +42,12 @@ export const storeApi = createApi({
           };
         },
       }),
+
+      //addBookToCart etc
+      // (!token) do function, just in local storage
+      // (token) run function, auth to verify user, then go to cart
+
+
       getUsers: builder.query({
         query: () => "api/users",
       }),
