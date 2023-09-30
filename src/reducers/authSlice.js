@@ -10,7 +10,7 @@ const authApi = storeApi.injectEndpoints({
     
     endpoints: (builder) => ({
         me: builder.query({ 
-            query: () => "/me",
+            query: () => "auth/me",
         }),
         login: builder.mutation({
             query: (credentials) => ({

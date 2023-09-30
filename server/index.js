@@ -6,18 +6,22 @@ const jwt = require("jsonwebtoken")
 const authorization = require("./middleware");
 
 const cors = require('cors');
+
+//Use Cors
 app.use(cors());
 
+//Serve Static files
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
+//Parse incoming requests with JSON payloads
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-
+//Routes
 app.use("/api", authorization, require('./api'))
-app.use("/auth", require("./auth"))
+app.use("/auth", authorization, require("./auth"))
 
-
+//Catch all other routes and serve index.html
 app.get("*", (_req, res) => {
     res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
 })

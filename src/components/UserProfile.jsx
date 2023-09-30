@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import TextInput from "./inputs/TextInput";
 import { useEditUserMutation } from "../reducers/api";
-import { useMeQuery } from "../reducers/authSlice"
+import { useMeQuery } from "../reducers/authSlice";
+import { useParams } from "react-router-dom";
+
 
 
 function UserProfile() {
@@ -14,7 +16,8 @@ function UserProfile() {
     const [zipCode, setZipCode] = useState("");
     const [phone, setPhone] = useState("");
 
-    const {data: userData } = useMeQuery();
+    const { id } = useParams();
+    const {data: userData, isLoading, isError } = useMeQuery();
     const [editUser, { isLoading: isSaving }] = useEditUserMutation();
 
     useEffect(() => {
@@ -46,26 +49,28 @@ function UserProfile() {
                 phone
             };
 
-        if (isLoading) {
-            return <div>Loading your profile...</div>;
-        }
-
-        if (isError) {
-            return <div>Error loading your profile. Please try again later</div>
-        }
-
             await editUser(updatedData).unwrap();
             alert("Profile updated successfully");
         } catch (error) {
-            alert(`Error updating profile: &{error.message}`);
+            alert(`Error updating profile: ${error.message}`);
         }
     };
+
+    if (isLoading) {
+        return <div>Loading your profile...</div>;
+    }
+
+    if (isError) {
+        return <div>Error loading your profile: {isError.message}. Please try again later.</div>
+    }
+
+    const displayName = userData.firstName || userData.username;
 
     return (
         <div>
             
             <h2>Update your profile</h2>
-            <h3>Welcome {firstName},</h3>
+            <h3>Welcome {displayName},</h3>
                 <form onSubmit={handleSubmit}>
                     <label>
                         First Name
