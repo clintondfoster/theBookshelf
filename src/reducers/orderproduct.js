@@ -8,7 +8,7 @@ export const orderProductApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3000/'}),
     endpoints: (builder) => ({
         getOpenOrder: builder.query({
-            query: (id)=> 'api/orderproduct',
+            query: ()=> 'api/orderproduct',
         }),
         createOrderProduct: builder.mutation({
             query: (body) => ({

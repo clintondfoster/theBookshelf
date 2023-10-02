@@ -22,7 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", authorization, require('./api'))
 app.use("/auth", require("./auth"))
 
-app.listen(PORT, ()=>{
 
 const server = app.listen(PORT, ()=>{
     console.log('Server running on port'+PORT)

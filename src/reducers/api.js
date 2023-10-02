@@ -12,8 +12,9 @@ export const storeApi = createApi({
       const credentials = window.sessionStorage.getItem(CREDENTIALS);
       const parsedCredentials = JSON.parse(credentials || "{}")
       const token = parsedCredentials.token;
+      console.log('token from reducer', token)
       if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+        headers.set("Authorization", token);
       }
       console.log("token from session storage:", token)
       return headers;
