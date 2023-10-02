@@ -3,7 +3,8 @@ const process = require("process");
 
 function authorization(req, res, next) {
     console.log("auth middleware invoked")
-    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+    console.log(req.headers)
+    const token = req.headers.authorization 
 
     console.log("extracted token:", token)
     if (!token) {

@@ -8,7 +8,7 @@ router.get("/", async (req, res, next) => {
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
-        userId: req.user.id,
+        userId: req.user.userId,
         isFulfilled: false,
       },
       include: {
@@ -31,7 +31,7 @@ router.post("/", async (req, res, next) => {
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
-        userId: req.user.id,
+        userId: req.user.userId,
         isFulfilled: false,
       },
       include: {
@@ -59,7 +59,7 @@ router.delete("/:id", async (req, res, next) => {
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
-        userId: req.user.id,
+        userId: req.user.userId,
         isFulfilled: false,
       },
       include: {
@@ -84,7 +84,7 @@ router.put("/:id", async (req, res, next) => {
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
-        userId: req.user.id,
+        userId: req.user.userId,
         isFulfilled: false,
       },
       include: {
