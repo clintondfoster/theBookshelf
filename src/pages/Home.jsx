@@ -1,9 +1,36 @@
-import { useGetBooksQuery } from "../reducers/api";
+import {
+  useGetBooksQuery,
+  useCreateOrderProductMutation,
+} from "../reducers/api";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Home = () => {
   const { data, isLoading } = useGetBooksQuery();
-  console.log(data)
+  // console.log(data);
+
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [createOrderProduct] = useCreateOrderProductMutation();
+
+  const addToCart = async () => {
+    try {
+      if (selectedBook) {
+        const response = await createOrderProduct({
+          booksId: selectedBook.id,
+          quantity: quantity,
+          price: selectedBook.price,
+        });
+
+        if (response.data) {
+          console.log("Added to Cart:", response.data.addedToCart);
+        }
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -19,8 +46,19 @@ const Home = () => {
             <h4>{i.author}</h4>
             <p>{i.description}</p>
             <p>${i.price}</p>
-            <button>Add To Cart</button>
-            {/* add onClick for add to cart */}
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                setSelectedBook(i);
+                addToCart();
+              }}
+            >
+              Add To Cart
+            </button>
           </div>
         ))
       )}
