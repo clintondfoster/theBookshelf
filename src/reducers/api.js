@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createSlice } from "@reduxjs/toolkit";
 
 const CREDENTIALS = "credentials";
 
@@ -86,7 +87,7 @@ export const storeApi = createApi({
       },
     }),
 
-    // order prodocuts
+    // order products
     getOrderProduct: builder.query({
       query: () => "api/orderproduct",
     }),
@@ -116,6 +117,40 @@ export const storeApi = createApi({
   }),
 });
 
+//add slice
+
+const initialState = [];
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      storeApi.endpoints.createOrderProduct.matchFulfilled,
+      (state, { payload }) => {
+        return [...state, payload.addedToCart]
+      }
+    ),
+    builder.addMatcher(
+      storeApi.endpoints.getOrderProduct.matchFulfilled,
+      (state, { payload }) => {
+        return [...payload.cart]
+      }
+    )
+    ;
+    // builder.addMatcher(storeApi.endpoints.register.matchFulfilled, storeToken);
+    // builder.addMatcher(storeApi.endpoints.logout.matchFulfilled, (state) => {
+    //   // console.log("logout")
+    //   state.credentials = {
+    //     token: "",
+    //     user: { userId: null },
+    //   };
+    //   window.sessionStorage.removeItem(CREDENTIALS);
+    // });
+  },
+});
+
 export const {
   useGetBooksQuery,
   useGetBookByIdQuery,
@@ -132,3 +167,5 @@ export const {
   useDeleteOrderProductMutation,
   useUpdateOrderProductMutation,
 } = storeApi;
+
+export default cartSlice.reducer 
