@@ -4,6 +4,7 @@ import SingleBook from "./pages/SingleBook";
 import AuthForm from "./components/AuthForm"
 import {Route, Routes} from "react-router-dom";
 import UserProfile from "./components/UserProfile";
+import ViewCart from "./pages/ViewCart";
 
 
 
@@ -19,6 +20,7 @@ function App() {
       {/* <Route path={"/register"} element={<AuthForm/>}/> */}
       <Route path={"/profile/:id"} element={<UserProfile/>}/>
       <Route path={"/me"} element={<UserProfile/>}/>
+      <Route path={"/cart"} element={<ViewCart/>}/>
     </Routes>
     </div>
   );

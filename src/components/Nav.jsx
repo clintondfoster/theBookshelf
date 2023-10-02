@@ -35,7 +35,7 @@ function NavBar() {
   };
 
   const homeClick = () => {
-    navigate('/')
+    navigate('/home')
   }
 
   const cartClick = () => {

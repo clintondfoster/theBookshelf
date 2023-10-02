@@ -20,6 +20,7 @@ const Home = () => {
             <p>{i.description}</p>
             <p>${i.price}</p>
             <button>Add To Cart</button>
+            {/* add onClick for add to cart */}
           </div>
         ))
       )}
