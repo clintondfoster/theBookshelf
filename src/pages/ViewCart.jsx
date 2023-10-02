@@ -1,28 +1,33 @@
-// import { useGetOpenOrderQuery } from "../reducers/orderproduct";
-import { useGetOrderProductQuery } from "../reducers/api";
 
+import { useGetOrderProductQuery } from "../reducers/api";
+import { Link } from "react-router-dom";
 const ViewCart = () => {
 
   const {data, isLoading } = useGetOrderProductQuery(); 
   console.log(data)
  
   return (
-    <div>
+    <div>         <h2>Your Cart</h2>
     {isLoading ? (
       <h1>Loading...</h1>
     ) : data.cart.length === 0 ? (
       <h1>No Books Found</h1>
     ) : (
       data.cart.map((i) => (
-        <div key={i.id}>
-            <h2>Order ID: {i.orderId}</h2>
-            <h2>Book ID: {i.booksId}</h2>
-            <h2>Quantity: {i.quantity}</h2>
-            <h2>Price: {i.price}</h2>
+        <div key={i.orderId}>
+            <h5>Order ID: {i.orderId}</h5>
+            <h6>Book ID: {i.booksId}</h6>
+            <h6>Quantity: {i.quantity}</h6>
+            <h6>Price: ${i.price}</h6>        
         </div>
       ))
     )}
+   <Link to='/home' >Keep Shopping</Link>
+   <h4> Ready to Checkout?</h4>
+        <Link to="/">Checkout as Guest  </Link> <p>or</p>
+        <Link to="/auth">Sign in/Create an account </Link> 
   </div>
+  
   );
 };
 

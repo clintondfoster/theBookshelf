@@ -16,7 +16,7 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/search-results" element={<Search />} />
       <Route path={"/book/:id"} element={<SingleBook/>}/>
-       <Route path={"/cart"} element={<Cart/>}/>
+       {/* <Route path={"/cart"} element={<Cart/>}/> */}
         
       <Route path={"/auth"} element={<AuthForm/>}/>
       <Route path={"/login"} element={<AuthForm/>}/>
