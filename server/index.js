@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Routes
 app.use("/api", authorization, require('./api'))
-app.use("/auth", authorization, require("./auth"))
+app.use("/auth", require("./auth"))
 
 //Catch all other routes and serve index.html
 app.get("*", (_req, res) => {
