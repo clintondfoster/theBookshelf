@@ -25,7 +25,7 @@ const SingleBook = () => {
 }
    
 
-      <Link to='/home'>Go Back</Link>
+    <Link to='/home'>Go Back</Link>
     </div>
 
     
