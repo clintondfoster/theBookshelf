@@ -3,7 +3,6 @@ const app = express();
 const path = require("path");
 const PORT = 3000;
 const jwt = require("jsonwebtoken")
-const authorization = require("./middleware");
 const ViteExpress = require("vite-express")
 
 const cors = require('cors');
@@ -19,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 //Routes
-app.use("/api", authorization, require('./api'))
+app.use("/api", require('./api'))
 app.use("/auth", require("./auth"))
 
 
