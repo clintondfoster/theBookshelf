@@ -2,8 +2,10 @@ const jwt = require("jsonwebtoken");
 const process = require("process");
 
 function authorization(req, res, next) {
+    console.log("auth middleware invoked")
     const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
 
+    console.log("extracted token:", token)
     if (!token) {
         return res.status(401).send("No token provided.");
     }
@@ -11,8 +13,10 @@ function authorization(req, res, next) {
     try {
         const user = jwt.verify(token, process.env.JWT);
         req.user = user;
+        console.log("middleware req.user", req.user)
         next();
     } catch (error) {
+        console.log("Token verification error:", error.message);
         return res.status(403).send("Failed to authenticate token.")
     }
 }

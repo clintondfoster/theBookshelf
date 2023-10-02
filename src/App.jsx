@@ -15,8 +15,9 @@ function App() {
       <Route path="/search-results" element={<Search />} />
       <Route path={"/book/:id"} element={<SingleBook/>}/>
       <Route path={"/login"} element={<AuthForm/>}/>
-      <Route path={"/register"} element={<AuthForm/>}/>
+      {/* <Route path={"/register"} element={<AuthForm/>}/> */}
       <Route path={"/profile/:id"} element={<UserProfile/>}/>
+      <Route path={"/me"} element={<UserProfile/>}/>
     </Routes>
     </div>
   );
