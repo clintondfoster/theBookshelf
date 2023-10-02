@@ -4,6 +4,7 @@ const path = require("path");
 const PORT = 3000;
 const jwt = require("jsonwebtoken")
 const authorization = require("./middleware");
+const ViteExpress = require("vite-express")
 
 const cors = require('cors');
 
@@ -21,14 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", authorization, require('./api'))
 app.use("/auth", authorization, require("./auth"))
 
-//Catch all other routes and serve index.html
-app.get("*", (_req, res) => {
-    res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
-})
-
 app.listen(PORT, ()=>{
+
+const server = app.listen(PORT, ()=>{
     console.log('Server running on port'+PORT)
 })
+ViteExpress.bind(app,server)
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
