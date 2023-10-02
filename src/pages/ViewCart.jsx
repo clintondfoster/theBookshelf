@@ -24,9 +24,7 @@ const ViewCart = () => {
       )}
      
       <Link to="/home">Keep Shopping</Link>
-      <h4> Ready to Checkout?</h4>
-      <Link to="/">Checkout as Guest </Link> <p>or</p>
-      <Link to="/auth">Sign in/Create an account </Link>
+  
     </div>
   );
 };
