@@ -7,17 +7,22 @@ const authorization = require("./middleware");
 const ViteExpress = require("vite-express")
 
 const cors = require('cors');
+
+//Use Cors
 app.use(cors());
 
+//Serve Static files
 app.use(express.static(path.join(__dirname, "..", "dist")));
 
+//Parse incoming requests with JSON payloads
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-
+//Routes
 app.use("/api", authorization, require('./api'))
 app.use("/auth", require("./auth"))
 
+app.listen(PORT, ()=>{
 
 const server = app.listen(PORT, ()=>{
     console.log('Server running on port'+PORT)
