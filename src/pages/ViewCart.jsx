@@ -1,10 +1,13 @@
+
 // import { useGetOpenOrderQuery } from "../reducers/orderproduct";
 import { useEffect, useState } from "react";
 import { useGetOrderProductQuery, useGetBookByIdQuery } from "../reducers/api";
 import { useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 
 const ViewCart = () => {
+  const { data, isLoading } = useGetOrderProductQuery();
+  console.log(data);
 
   useGetOrderProductQuery()
   const cart = useSelector(state => state.cart)
@@ -13,6 +16,8 @@ const ViewCart = () => {
 
   return (
     <div>
+      {" "}
+      <h2>Your Cart</h2>
       {cart.map((i) => (
           <div key={i.id}>
             <h2>Book ID: {i.booksId}</h2>
@@ -21,6 +26,8 @@ const ViewCart = () => {
           </div>
         ))
       }
+       <Link to="/home">Keep Shopping</Link>
+
     </div>
   );
 };

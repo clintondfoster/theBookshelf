@@ -12,10 +12,10 @@ function App() {
   return (
     <div className="App">
     <Routes>
-      {/* <Route index element={<Home/>}/> */}
       <Route path="/home" element={<Home/>}/>
       <Route path="/search-results" element={<Search />} />
-      <Route path={"/book/:id"} element={<SingleBook/>}/>
+      <Route path={"/book/:id"} element={<SingleBook/>}/>   
+      <Route path={"/auth"} element={<AuthForm/>}/>
       <Route path={"/login"} element={<AuthForm/>}/>
       {/* <Route path={"/register"} element={<AuthForm/>}/> */}
       <Route path={"/profile/:id"} element={<UserProfile/>}/>
