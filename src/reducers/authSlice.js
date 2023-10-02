@@ -33,7 +33,9 @@ const authApi = storeApi.injectEndpoints({
 })
 
 function storeToken(state, { payload }) {
+    console.log('storeToken is running')
     state.credentials = { token: payload.token };
+    console.log("Token recieved:", payload.token);
     window.sessionStorage.setItem(
         CREDENTIALS,
         JSON.stringify({
@@ -41,6 +43,13 @@ function storeToken(state, { payload }) {
         })
     )
 }
+
+// let storedToken = ""; // Define the variable outside the component
+
+// function storeToken(state, { payload }) {
+//   state.credentials = { token: payload.token };
+//   storedToken = payload.token; // Store the token in a variable
+// }
 
 
 const initialState = {
