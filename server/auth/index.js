@@ -9,7 +9,6 @@ const authorization = require("../middleware");
 //Register new User
 router.post("/register", async (req, res, next) => {
 
-
     const salt_rounds = 5;
 
     try {
@@ -27,7 +26,6 @@ router.post("/register", async (req, res, next) => {
       if (existingUser) {
         return res.status(400).send("Username already exists");
       }
-
 
       const hashedPassword = await bcrypt.hash(password, salt_rounds);
 

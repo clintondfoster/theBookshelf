@@ -5,7 +5,6 @@ import { useMeQuery } from "../reducers/authSlice";
 import { useParams } from "react-router-dom";
 
 
-
 function UserProfile() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -15,6 +14,8 @@ function UserProfile() {
     const [state, setState] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [phone, setPhone] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
+    
 
     const { id } = useParams();
     const {data: userData, isLoading, isError } = useMeQuery();
@@ -30,7 +31,7 @@ function UserProfile() {
             setState(userData.state || "");
             setZipCode(userData.zipCode || "");
             setPhone(userData.phone || "");
-
+            setIsAdmin(userData.admin || false);
         }
     }, [userData]);
     
@@ -46,7 +47,8 @@ function UserProfile() {
                 city,
                 state,
                 zipCode,
-                phone
+                phone,
+                admin: isAdmin,
             };
 
             await editUser(updatedData).unwrap();
@@ -104,6 +106,12 @@ function UserProfile() {
                         Phone
                         <TextInput vl={phone} chg={setPhone} />
                     </label>
+                    {userData.admin && (
+                        <label>
+                            Admin:
+                            <input type='checkbox' checked={isAdmin} onChange={(e) => setIsAdmin(e.target.checked)} />
+                        </label>
+                    )}
                         <button type="submit" disabled={isSaving}>
                         Save Changes
                         </button>
