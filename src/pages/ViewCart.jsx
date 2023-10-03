@@ -18,9 +18,9 @@ const ViewCart = () => {
     <div>
       {" "}
       <h2>Your Cart</h2>
-      {cart.map((i) => (
-          <div key={i.id}>
-            <h2>Book ID: {i.booksId}</h2>
+      {cart.map((i, index) => (
+          <div key={index}>
+            <h2>Title: {i.title}</h2>
             <h2>Quantity: {i.quantity}</h2>
             <h2>Price: {i.price}</h2>
           </div>

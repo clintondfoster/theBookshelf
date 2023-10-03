@@ -129,7 +129,8 @@ const cartSlice = createSlice({
     builder.addMatcher(
       storeApi.endpoints.createOrderProduct.matchFulfilled,
       (state, { payload }) => {
-        return [...state, payload.addedToCart]
+        return [...payload.addedToCart]
+
       }
     ),
     builder.addMatcher(
@@ -138,16 +139,13 @@ const cartSlice = createSlice({
         return [...payload.cart]
       }
     )
+    builder.addMatcher(
+      storeApi.endpoints.deleteOrderProduct.matchFulfilled,
+      (state, { payload }) => {
+        return [...payload.deletedOrderProduct]
+      }
+    )
     ;
-    // builder.addMatcher(storeApi.endpoints.register.matchFulfilled, storeToken);
-    // builder.addMatcher(storeApi.endpoints.logout.matchFulfilled, (state) => {
-    //   // console.log("logout")
-    //   state.credentials = {
-    //     token: "",
-    //     user: { userId: null },
-    //   };
-    //   window.sessionStorage.removeItem(CREDENTIALS);
-    // });
   },
 });
 
