@@ -147,30 +147,23 @@ const cartSlice = createSlice({
     builder.addMatcher(
       storeApi.endpoints.createOrderProduct.matchFulfilled,
       (state, { payload }) => {
-        return [...state, payload.addedToCart];
-      }
-    ),
-    builder.addMatcher(
-      storeApi.endpoints.deleteOrderProduct.matchFulfilled,
-      (state, { payload }) => {
-        return [...payload.deleteOrderProduct]
+        return [...payload.addedToCart]
+
       }
     ),
     builder.addMatcher(
       storeApi.endpoints.getOrderProduct.matchFulfilled,
       (state, { payload }) => {
-        return [...payload.cart];
+        return [...payload.cart]
       }
-    );
-    // builder.addMatcher(storeApi.endpoints.register.matchFulfilled, storeToken);
-    // builder.addMatcher(storeApi.endpoints.logout.matchFulfilled, (state) => {
-    //   // console.log("logout")
-    //   state.credentials = {
-    //     token: "",
-    //     user: { userId: null },
-    //   };
-    //   window.sessionStorage.removeItem(CREDENTIALS);
-    // });
+    )
+    builder.addMatcher(
+      storeApi.endpoints.deleteOrderProduct.matchFulfilled,
+      (state, { payload }) => {
+        return [...payload.deletedOrderProduct]
+      }
+    )
+    ;
   },
 });
 
