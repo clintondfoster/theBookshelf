@@ -153,7 +153,7 @@ const cartSlice = createSlice({
     builder.addMatcher(
       storeApi.endpoints.deleteOrderProduct.matchFulfilled,
       (state, { payload }) => {
-        return [...payload.deletedOrderProduct]
+        return [...payload.deleteOrderProduct]
       }
     ),
     builder.addMatcher(

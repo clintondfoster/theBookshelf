@@ -20,6 +20,7 @@ const Home = () => {
           booksId: selectedBook.id,
           quantity: quantity,
           price: selectedBook.price,
+          title: selectedBook.title
         });
 
         if (response.data) {
