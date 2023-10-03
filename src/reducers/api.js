@@ -114,6 +114,24 @@ export const storeApi = createApi({
         };
       },
     }),
+
+    // order endpoints (create, get all, get single order)
+    getOrder: builder.query({
+      query: () => "api/order",
+    }),
+    getOrderById: builder.query({
+      query: (id) => `api/order/${id}`,
+    }),
+    createOrder: builder.mutation({
+      query(data) {
+        const { id, ...body } = data;
+        return {
+          url: "api/order/submit",
+          method: "PUT",
+          body,
+        };
+      },
+    }),
   }),
 });
 
@@ -129,16 +147,21 @@ const cartSlice = createSlice({
     builder.addMatcher(
       storeApi.endpoints.createOrderProduct.matchFulfilled,
       (state, { payload }) => {
-        return [...state, payload.addedToCart]
+        return [...state, payload.addedToCart];
+      }
+    ),
+    builder.addMatcher(
+      storeApi.endpoints.deleteOrderProduct.matchFulfilled,
+      (state, { payload }) => {
+        return [...payload.deletedOrderProduct]
       }
     ),
     builder.addMatcher(
       storeApi.endpoints.getOrderProduct.matchFulfilled,
       (state, { payload }) => {
-        return [...payload.cart]
+        return [...payload.cart];
       }
-    )
-    ;
+    );
     // builder.addMatcher(storeApi.endpoints.register.matchFulfilled, storeToken);
     // builder.addMatcher(storeApi.endpoints.logout.matchFulfilled, (state) => {
     //   // console.log("logout")
@@ -166,6 +189,9 @@ export const {
   useCreateOrderProductMutation,
   useDeleteOrderProductMutation,
   useUpdateOrderProductMutation,
+  useCreateOrderMutation,
+  useGetOrderByIdQuery,
+  useGetOrderQuery
 } = storeApi;
 
-export default cartSlice.reducer 
+export default cartSlice.reducer;

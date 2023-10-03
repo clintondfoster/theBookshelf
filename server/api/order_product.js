@@ -55,11 +55,16 @@ router.post("/", authorization, async (req, res, next) => {
     next(err);
   }
 });
-
-router.delete("/:id", authorization,  async (req, res, next) => {
+router.delete("/:id", authorization, async (req, res, next) => {
   const { booksId, quantity, price } = req.body;
   try {
-    const openOrder = await prisma.order.findFirst({
+  
+    const deleteOrderProduct = await prisma.order_product.delete({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+    const deletedFromOrder = await prisma.order.findFirst({
       where: {
         userId: req.user.userId,
         isFulfilled: false,
@@ -69,17 +74,36 @@ router.delete("/:id", authorization,  async (req, res, next) => {
       },
     });
 
-    const deleteOrderProduct = await prisma.order_product.delete({
-      where: {
-        id: Number(req.params.id),
-      },
-    });
-
-    res.send(deleteOrderProduct);
+    res.send({deleteOrderProduct: deletedFromOrder.order_products});
   } catch (err) {
     next(err);
   }
 });
+
+// router.delete("/:id", authorization,  async (req, res, next) => {
+//   const { booksId, quantity, price } = req.body;
+//   try {
+//     const openOrder = await prisma.order.findFirst({
+//       where: {
+//         userId: req.user.userId,
+//         isFulfilled: false,
+//       },
+//       include: {
+//         order_products: true,
+//       },
+//     });
+
+//     const deleteOrderProduct = await prisma.order_product.delete({
+//       where: {
+//         id: Number(req.params.id),
+//       },
+//     });
+
+//     res.send(deleteOrderProduct);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 router.put("/:id", authorization, async (req, res, next) => {
   const { booksId, quantity, price } = req.body;
