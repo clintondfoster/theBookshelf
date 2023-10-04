@@ -80,7 +80,7 @@ router.put("/submit", authorization, async (req, res, next) => {
         isFulfilled: false,
       },
     });
-
+console.log(NewOrder)
     res.send({ NewOrder});
   } catch (err) {
     next(err);

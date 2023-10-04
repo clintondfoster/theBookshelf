@@ -5,6 +5,7 @@ import AuthForm from "./components/AuthForm"
 import {Route, Routes} from "react-router-dom";
 import UserProfile from "./components/UserProfile";
 import ViewCart from "./pages/ViewCart";
+import Checkout from "./pages/Checkout";
 
 
 
@@ -21,6 +22,7 @@ function App() {
       <Route path={"/profile/:id"} element={<UserProfile/>}/>
       <Route path={"/me"} element={<UserProfile/>}/>
       <Route path={"/cart"} element={<ViewCart/>}/>
+      <Route path={"/checkout"} element={<Checkout/>}/>
     </Routes>
     </div>
   );

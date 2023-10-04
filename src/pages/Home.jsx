@@ -46,7 +46,7 @@ const Home = () => {
             </Link>
             <h4>{i.author}</h4>
             <p>{i.description}</p>
-            <p>${i.price}</p>
+            <p>¥{i.price}</p>
             <input
               type="number"
               value={quantity}
@@ -63,6 +63,7 @@ const Home = () => {
           </div>
         ))
       )}
+    
     </div>
   );
 };
