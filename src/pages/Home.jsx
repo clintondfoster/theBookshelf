@@ -1,6 +1,7 @@
 import {
   useGetBooksQuery,
   useCreateOrderProductMutation,
+  useGetOrderProductQuery
 } from "../reducers/api";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -12,6 +13,7 @@ const Home = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [createOrderProduct] = useCreateOrderProductMutation();
+  const {refetch} =   useGetOrderProductQuery();
 
   const addToCart = async () => {
     try {
@@ -26,6 +28,7 @@ const Home = () => {
         if (response.data) {
           console.log("Added to Cart:", response.data.addedToCart);
         }
+        refetch()
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
