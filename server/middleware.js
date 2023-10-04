@@ -15,6 +15,10 @@ function authorization(req, res, next) {
         const user = jwt.verify(token, process.env.JWT);
         req.user = user;
         console.log("middleware req.user", req.user)
+
+        if (!user.admin) {
+            return res.send(403).send("Access denied. Insufficient permissions.");
+        }
         next();
     } catch (error) {
         console.log("Token verification error:", error.message);
@@ -23,3 +27,4 @@ function authorization(req, res, next) {
 }
 
 module.exports = authorization;
+

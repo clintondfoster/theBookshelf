@@ -2,24 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+const authorization = require("../middleware");
 
+//Apply the middleware to every route in this router
+router.use(authorization);
 
-// function authenticateToken (req, res, next) {
-//   const authHeader = req.headers['authorization'];
-//   const token = authHeader && authHeader.split(" ")[1];
-
-//   if (!token) return res.sendStatus(401); //if there is no token, then unauthorized 
-
-//   jwt.verify(token, process.env.JWT, (err, user) => {
-//     if (err) return res.sendStatus(403); //if token is not valid, then forbidden
-//     req.user = user;
-//     next();
-//   })
-// }
-
-
+//User can get/view their own profile
 router.get("/profile", async (req, res, next) => {
   try {
     if (!req.user) {
@@ -43,51 +31,59 @@ router.get("/profile", async (req, res, next) => {
 });
 
 
-router.put("/profile", async (req, res, next) => {
+//Admin can get/view a user by profile:id
+router.get("/profile/:id", async (req, res, next) => {
   try {
-    if (!req.user) {
-        return res.status(401).send("User not authenticated");
-    }
+      if (!req.user) {
+          return res.status(401).send("User not authenticated");
+      }
 
-    const updatedInfo = req.body;
+      //Only admin or the user themselves can view the profile
+      if (!req.user.admin && req.user.id !== Number(req.params.id)) {
+          return res.status(403).send("Access denied. Admin only.");
+      }
 
-    const updatedUser = await prisma.users.update({
-        where: { id: req.user.id },
-        data: updatedInfo,
-    });
+      const user = await prisma.users.findUnique({
+          where: { id: Number(req.params.id) },
+      });
 
-    res.send(updatedUser);
-} catch (err) {
-    next(err);
-}
+      if (!user) {
+          return res.status(404).send("User not found");
+      }
+
+      res.send(user);
+  } catch (err) {
+      next(err);
+  }
 });
 
-// router.get("/", async (req, res, next) => {
+
+// router.put("/profile", async (req, res, next) => {
 //   try {
-//     const allUsers = await prisma.users.findMany();
-//     res.send(allUsers);
-//   } catch (err) {
+//     if (!req.user) {
+//         return res.status(401).send("User not authenticated");
+//     }
+
+//     const updatedInfo = req.body;
+
+//     const updatedUser = await prisma.users.update({
+//         where: { id: req.user.id },
+//         data: updatedInfo,
+//     });
+
+//     res.send(updatedUser);
+// } catch (err) {
 //     next(err);
-//   }
+// }
 // });
 
-// router.get("/:id", async (req, res, next) => {
-//     try {
-//       const user = await prisma.users.findUnique({
-//         where: {
-//           id: Number(req.params.id),
-//         },
-//       });
-//       res.send(user);
-//     } catch (err) {
-//       next(err);
-//     }
-//   });
-
-
+//Create user - Admin Only
 router.post('/', async (req, res, next) => {
   try{
-    const user = await prisma.order.create({
+    if (!req.user || !req.user.admin) {
+      return res.status.apply(403).send("Access denied. Admin only.");
+    }
+    const user = await prisma.users.create({
       data:req.body
     })
     res.send(user)
@@ -95,9 +91,14 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+  //Admin only delete user
   router.delete("/:id", async (req, res, next) => {
   
     try {
+      if (!req.user.admin) {
+        return res.status(403).send("Access denied. Admin only.");
+      }
+
       const user = await prisma.users.delete({
         where: {
           id: Number(req.params.id),
@@ -109,14 +110,17 @@ router.post('/', async (req, res, next) => {
     }
   });
   
-
-
+  //Admin can - Update user profile & make aa user 'admin'
   router.put("/profile/:id", async (req, res, next) => {
   
     const userIdFromToken = req.user.id;
     const userIdFromParam = Number(req.params.id);
 
-    if (userIdFromToken !== userIdFromParam) {
+    if(!req.user.admin && req.body.hasOwnProperty('admin')) {
+      return res.status(403).send("You are not authorizated to change admin status.")
+    }
+
+    if (!req.user.admin && userIdFromToken !== userIdFromParam) {
       return res.status(403).send("You can only update your own information.")
     }
 
@@ -132,5 +136,23 @@ router.post('/', async (req, res, next) => {
       next(err);
     }
   });
+
+//   //Admin only - Update User to be admin
+//   router.put('/users/:id/admin', async (req, res, next) => {
+//     if (!req.user.admin) {
+//         return res.status(403).send('Access denied. Admin rights required.');
+//     }
+
+//     try {
+//         const updatedUser = await prisma.users.update({
+//             where: { id: Number(req.params.id) },
+//             data: { admin: true },
+//         });
+
+//         res.send(updatedUser);
+//     } catch (err) {
+//         next(err);
+//     }
+// });
 
 module.exports = router;
