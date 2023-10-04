@@ -20,7 +20,7 @@ const SingleBook = () => {
       <p>Published on : {data.publish_date}</p>
       <p> By: {data.publisher}</p>
 
-      <button>Add To Cart</button>
+    
     </div>
 }
    
