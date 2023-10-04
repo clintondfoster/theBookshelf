@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const authorization = require("../middleware");
 
 //Apply the middleware to every route in this router
 router.use(authorization);
@@ -79,7 +80,7 @@ router.get("/profile/:id", async (req, res, next) => {
 //Create user - Admin Only
 router.post('/', async (req, res, next) => {
   try{
-    if (!req.user || req.user.admin) {
+    if (!req.user || !req.user.admin) {
       return res.status.apply(403).send("Access denied. Admin only.");
     }
     const user = await prisma.users.create({
@@ -109,11 +110,15 @@ router.post('/', async (req, res, next) => {
     }
   });
   
-  //Update user profile with admin check
+  //Admin can - Update user profile & make aa user 'admin'
   router.put("/profile/:id", async (req, res, next) => {
   
     const userIdFromToken = req.user.id;
     const userIdFromParam = Number(req.params.id);
+
+    if(!req.user.admin && req.body.hasOwnProperty('admin')) {
+      return res.status(403).send("You are not authorizated to change admin status.")
+    }
 
     if (!req.user.admin && userIdFromToken !== userIdFromParam) {
       return res.status(403).send("You can only update your own information.")

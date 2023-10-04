@@ -51,11 +51,6 @@ export const storeApi = createApi({
         },
       }),
 
-      //addBookToCart etc
-      // (!token) do function, just in local storage
-      // (token) run function, auth to verify user, then go to cart
-
-
       getUsers: builder.query({
         query: () => "api/users",
       }),

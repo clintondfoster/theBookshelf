@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useGetBooksQuery } from "./reducers/api";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
+import AdminDashboard from "./components/Admin/AdminDashboard";
 
 
 function App() {
@@ -16,7 +17,6 @@ function App() {
   // const data = useSelector(state => state.data);
   const me = useSelector((state) => state.auth.credentials.user);
   const books = useGetBooksQuery();
-
   const [load, setLoad] = useState(true);
 
   useEffect(()=>{
@@ -24,19 +24,30 @@ function App() {
   }, [books])
  
 
-  const loggedIn = me.userId;
+  const loggedIn = Boolean(me?.userId);
+  const isAdmin = Boolean(me?.admin);
   
   return (
     <Routes>
+      {/* Public Routes */}
       <Route path="/home" element={<Home />} />
       <Route path="/search-results" element={<Search />} />
       <Route path={"/book/:id"} element={<SingleBook />} />
-      <Route path={"/cart"} element={<Cart />} />
       <Route path={"/login"} element={<AuthForm />} />
+      <Route path={"/cart"} element={<Cart />} />
+
+      {/* Authenticated Routes */} 
       <Route path="/checkout" element={loggedIn ? <Checkout /> : <Navigate to="/login" />} />
-      <Route path="/admin/*" element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
       <Route path={"/me"} element={loggedIn ? <UserProfile /> : <Navigate to="/login" />} />
+      {/* <Route path="/submit" element={logginIn ? <Pay /> : <Navigate to="/login />"} /> */}
       <Route path={"/profile/:id"} element={<UserProfile/>}/>
+
+      {/* Admin routes */}
+      <Route path="/admin/*" element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
+
+
+      {/* Fallback Route */}
+      {/* <Route path="*" element={<Navigate to="/home" />} /> */}
     </Routes>
   )
 }

@@ -16,7 +16,7 @@ function authorization(req, res, next) {
         req.user = user;
         console.log("middleware req.user", req.user)
 
-        if (role === 'admin' && !user.admin) {
+        if (!user.admin) {
             return res.send(403).send("Access denied. Insufficient permissions.");
         }
         next();
@@ -28,4 +28,3 @@ function authorization(req, res, next) {
 
 module.exports = authorization;
 
-cartQuantity = 0;
