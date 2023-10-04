@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 import { useDeleteOrderProductMutation } from "../reducers/api";
 
 const ViewCart = () => {
+
   const { data, isLoading } = useGetOrderProductQuery();
   console.log(data);
 
   useGetOrderProductQuery();
   const cart = useSelector((state) => state.cart);
   console.log(cart);
-  
 
   const [removeItem] = useDeleteOrderProductMutation();
   const onDelete = async (id) => {
@@ -37,7 +37,12 @@ const ViewCart = () => {
           <button onClick={() => onDelete(i.id)}>Remove Item</button>
         </div>
       ))}
+      <section>
       <Link to="/home">Keep Shopping</Link>
+      </section>
+      <section>
+      <Link to="/checkout">Checkout</Link>
+      </section>
     </div>
   );
 };
