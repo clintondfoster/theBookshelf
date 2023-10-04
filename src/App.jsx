@@ -3,13 +3,15 @@ import Home from "./pages/Home";
 import SingleBook from "./pages/SingleBook";
 import AuthForm from "./components/AuthForm"
 import {Route, Routes} from "react-router-dom";
-import Cart from "./pages/Cart";
 import UserProfile from "./components/UserProfile";
 import { useSelector } from "react-redux";
 import { useGetBooksQuery } from "./reducers/api";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import AdminDashboard from "./components/Admin/AdminDashboard";
+import ViewCart from "./pages/ViewCart";
+import Checkout from "./pages/Checkout";
+
 
 
 function App() {
@@ -34,7 +36,7 @@ function App() {
       <Route path="/search-results" element={<Search />} />
       <Route path={"/book/:id"} element={<SingleBook />} />
       <Route path={"/login"} element={<AuthForm />} />
-      <Route path={"/cart"} element={<Cart />} />
+      <Route path={"/cart"} element={<ViewCart />} />
 
       {/* Authenticated Routes */} 
       <Route path="/checkout" element={loggedIn ? <Checkout /> : <Navigate to="/login" />} />

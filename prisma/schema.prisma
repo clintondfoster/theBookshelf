@@ -8,52 +8,50 @@ datasource db {
 }
 
 model books {
-  id           Int     @id @default(autoincrement())
-  title        String
-  author       String
-  description  String
-  price        Int
-  publisher    String?
-  publish_date String? @map("publish date")
-  genre        String?
-
-  order_product order_product[]
+  id                                       Int             @id @default(autoincrement())
+  title                                    String          @unique
+  author                                   String
+  description                              String          @unique
+  price                                    Int
+  publisher                                String?
+  publish_date                             String?         @map("publish date")
+  genre                                    String?
+  order_product                            order_product[]
+  order_product_order_product_titleTobooks order_product[] @relation("order_product_titleTobooks")
 }
 
 model order_product {
-  id       Int   @id @default(autoincrement())
-  orderId  Int
-  order    order @relation(fields: [orderId], references: [id])
-  booksId  Int
-  books    books @relation(fields: [booksId], references: [id])
-  quantity Int
-  price    Int
+  id                               Int     @id @default(autoincrement())
+  booksId                          Int
+  orderId                          Int
+  price                            Int
+  quantity                         Int
+  title                            String?
+  books                            books   @relation(fields: [booksId], references: [id])
+  order                            order   @relation(fields: [orderId], references: [id])
+  books_order_product_titleTobooks books?  @relation("order_product_titleTobooks", fields: [title], references: [title], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model order {
-  id            Int             @id @default(autoincrement())
-  userId        Int
-  user          users           @relation(fields: [userId], references: [id])
+  id             Int             @id @default(autoincrement())
+  isFulfilled    Boolean         @default(false)
+  userId         Int
+  user           users           @relation(fields: [userId], references: [id])
   order_products order_product[]
-  isFulfilled  Boolean @default(false)
-
-  
-  // false = active cart
 }
 
 model users {
   id            Int     @id @default(autoincrement())
-  firstName     String?
-  lastName      String?
   username      String  @unique
+  password      String
   email         String? @unique
-  streetAddress String?
-  city          String?
-  state         String?
-  zipCode       String?
   phone         String? @unique
   admin         Boolean @default(false)
-  password      String
-
-  orders order[]
+  city          String?
+  firstName     String?
+  lastName      String?
+  state         String?
+  streetAddress String?
+  zipCode       String?
+  orders        order[]
 }

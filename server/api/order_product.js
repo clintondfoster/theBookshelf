@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const authorization = require("../middleware") ;
+const authorization = require("../middleware");
 
 // get an unfulfilled order
 router.get("/", authorization, async (req, res, next) => {
@@ -17,8 +17,6 @@ router.get("/", authorization, async (req, res, next) => {
       },
     });
     res.status(200).send({ cart: openOrder.order_products });
-
-
   } catch (err) {
     console.error(err);
     next(err);
@@ -27,7 +25,7 @@ router.get("/", authorization, async (req, res, next) => {
 
 // adding item to cart
 router.post("/", authorization, async (req, res, next) => {
-  const { booksId, quantity, price } = req.body;
+  const { booksId, quantity, price, title } = req.body;
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
@@ -39,45 +37,104 @@ router.post("/", authorization, async (req, res, next) => {
       },
     });
 
-    const createdOrderProduct = await prisma.order_product.create({
-      data: {
-        orderId: openOrder.id,
-        booksId,
-        quantity,
-        price,
-      },
-    });
+    const existingBook = openOrder.order_products.find(
+      (book) => book.booksId === booksId
+    );
 
-    res.send({ addedToCart: createdOrderProduct });
+    if (existingBook) {
+      const updatedOrderProduct = await prisma.order_product.update({
+        where: { id: existingBook.id },
+        data: {
+          quantity: existingBook.quantity + quantity,
+        },
+      });
+
+      const openOrder = await prisma.order.findFirst({
+        where: {
+          userId: req.user.id,
+          isFulfilled: false,
+        },
+        include: {
+          order_products: true,
+        },
+      });
+
+      
+      res.send({addedToCart: openOrder.order_products})
+    } else {
+      const createdOrderProduct = await prisma.order_product.create({
+        data: {
+          orderId: openOrder.id,
+          booksId,
+          quantity,
+          price,
+          title,
+        },
+      }); 
+      const updatedOrder = await prisma.order.findFirst({
+        where: {
+          userId: req.user.id,
+          isFulfilled: false,
+        },
+        include: {
+          order_products: true,
+        },
+      });
+      res.send({addedToCart: updatedOrder.order_products})
+    }
   } catch (err) {
     next(err);
   }
 });
-
-router.delete("/:id", authorization,  async (req, res, next) => {
+router.delete("/:id", authorization, async (req, res, next) => {
   const { booksId, quantity, price } = req.body;
   try {
-    const openOrder = await prisma.order.findFirst({
-      where: {
-        userId: req.user.userId,
-        isFulfilled: false,
-      },
-      include: {
-        order_products: true,
-      },
-    });
-
+  
     const deleteOrderProduct = await prisma.order_product.delete({
       where: {
         id: Number(req.params.id),
       },
     });
+    const deletedFromOrder = await prisma.order.findFirst({
+      where: {
+        userId: req.user.userId,
+        isFulfilled: false,
+      },
+      include: {
+        order_products: true,
+      },
+    });
 
-    res.send(deleteOrderProduct);
+    res.send({deleteOrderProduct: deletedFromOrder.order_products});
   } catch (err) {
     next(err);
   }
 });
+
+// router.delete("/:id", authorization,  async (req, res, next) => {
+//   const { booksId, quantity, price } = req.body;
+//   try {
+//     const openOrder = await prisma.order.findFirst({
+//       where: {
+//         userId: req.user.userId,
+//         isFulfilled: false,
+//       },
+//       include: {
+//         order_products: true,
+//       },
+//     });
+
+//     const deleteOrderProduct = await prisma.order_product.delete({
+//       where: {
+//         id: Number(req.params.id),
+//       },
+//     });
+
+//     res.send(deleteOrderProduct);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 router.put("/:id", authorization, async (req, res, next) => {
   const { booksId, quantity, price } = req.body;
