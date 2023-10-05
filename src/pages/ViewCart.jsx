@@ -10,8 +10,13 @@ import { useDispatch } from "react-redux";
 const ViewCart = () => {
 
   const { data, isLoading } = useGetOrderProductQuery();
+  console.log(data);
+  
+  const {refetch} =   useGetOrderProductQuery();
+
   console.log("cart data", data);
 
+  
   useGetOrderProductQuery();
   const cart = useSelector((state) => state.cart);
   const guestCart = useSelector((state) => state.guestCart)
@@ -23,7 +28,7 @@ const ViewCart = () => {
     await removeItem(id)
       .then(() => {
         console.log("delete");
-      })
+      }).then(()=> refetch())
       .catch(() => {
         console.log("error");
       });
@@ -63,7 +68,6 @@ const ViewCart = () => {
           ))}
         </>
       )}
-  
       <section>
         <Link to="/home">Keep Shopping</Link>
       </section>
