@@ -74,7 +74,7 @@ router.post("/register", async (req, res, next) => {
         return res.status(401).send("Invalid Login");
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT)
+    const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.JWT)
       res.send({
         token,
         user: {

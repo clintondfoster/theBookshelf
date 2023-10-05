@@ -46,7 +46,7 @@ model users {
   password      String
   email         String? @unique
   phone         String? @unique
-  admin         Boolean @default(false)
+  isAdmin       Boolean @default(false)
   city          String?
   firstName     String?
   lastName      String?

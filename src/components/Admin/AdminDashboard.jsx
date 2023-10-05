@@ -1,16 +1,19 @@
-import React from 'react';
+import React from "react";
 import AdminNavBar from "./AdminNavBar";
+import { Route, Routes } from "react-router-dom";
+import Users from "./UserManagement/Users";
+// import Books from "./BookManagement/Books";
 
 function AdminDashboard() {
-    return (
-        <div>
-            <AdminNavBar />
-            <Switch>
-                <Route path="/admin/usermanagement/users" component={Users} />
-                <Route path="/admin/bookmanagement/books" component={BooksManagement} />
-            </Switch>
-        </div>
-    );
+  return (
+    <div>
+      <AdminNavBar />
+      <Routes>
+        <Route path="/usermanagement/users" element={<Users />} />
+        {/* <Route path="/bookmanagement/books" element={<Books />} /> */}
+      </Routes>
+    </div>
+  );
 }
 
 export default AdminDashboard;
