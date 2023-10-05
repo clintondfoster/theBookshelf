@@ -11,6 +11,7 @@ import { Navigate } from "react-router-dom";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import ViewCart from "./pages/ViewCart";
 import Checkout from "./pages/Checkout";
+import OrderHistory from "./pages/OrderHistory";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
       <Route path={"/book/:id"} element={<SingleBook />} />
       <Route path={"/login"} element={<AuthForm />} />
       <Route path={"/cart"} element={<ViewCart />} />
+      <Route path={"/orderhistory"} element={<OrderHistory />} />
 
       {/* Authenticated Routes */} 
       <Route path="/checkout" element={loggedIn ? <Checkout /> : <Navigate to="/login" />} />

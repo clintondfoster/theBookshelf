@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useDeleteOrderProductMutation } from "../reducers/api";
 import { removeFromGuestCart } from "../reducers/guestSlice";
 import { useDispatch } from "react-redux";
+import CartItemDB from "../components/CartItemDB";
+import CartItemLS from "../components/CartItemLS";
 
 const ViewCart = () => {
 
@@ -34,6 +36,7 @@ const ViewCart = () => {
       });
   };
 
+
   // const loggedIn = false 
   const loggedIn = !!me;
   const dispatch = useDispatch()
@@ -47,24 +50,14 @@ const ViewCart = () => {
         <>
           <h2>Your Cart</h2>
           {cart.map((i) => (
-            <div key={i.id}>
-              <h2>Title:{i.title}</h2>
-              <h2>Quantity: {i.quantity}</h2>
-              <h2>Price: ¥{i.price}</h2>
-              <button onClick={() => onDelete(i.id)}>Remove Item</button>
-            </div>
+            <CartItemDB onClickFunc={onDelete} book={i}/>
           ))}
         </>
       ) : (
         <>
           <h2>Your Cart</h2>
           {guestCart.map((i) => (
-            <div key={i.id}>
-              <h2>Title:{i.title}</h2>
-              <h2>Quantity: {i.quantity}</h2>
-              <h2>Price: ¥{i.price}</h2>
-              <button onClick={handleRemoveFromGuestCart}>Remove Item</button> 
-            </div>
+            <CartItemLS onClickFunc={handleRemoveFromGuestCart} />
           ))}
         </>
       )}

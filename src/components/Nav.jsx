@@ -45,6 +45,10 @@ function NavBar() {
   const accountClick = () => {
     navigate('/auth')
   }
+  const orderClick = () => {
+    navigate('/orderhistory')
+  }
+
 
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
@@ -95,6 +99,7 @@ function NavBar() {
             </Form>
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
+            <Nav.Link onClick={orderClick}>My Order</Nav.Link>
             <div>
               {user.userId && <h1>Welcome {user.userId}</h1>}
               {user.userId && <button onClick={logout}>Logout</button>}

@@ -21,7 +21,7 @@ router.get("/", authorization, async (req, res, next) => {
         order_products: true,
       },
     });
-    res.status(200).send({ allOrders });
+    res.status(200).send(allOrders);
   } catch (err) {
     console.error(err);
     next(err);
