@@ -9,7 +9,10 @@ const ViewCart = () => {
 
   const { data, isLoading } = useGetOrderProductQuery();
   console.log(data);
+  
+  const {refetch} =   useGetOrderProductQuery();
 
+  
   useGetOrderProductQuery();
   const cart = useSelector((state) => state.cart);
   console.log(cart);
@@ -19,7 +22,7 @@ const ViewCart = () => {
     await removeItem(id)
       .then(() => {
         console.log("delete");
-      })
+      }).then(()=> refetch())
       .catch(() => {
         console.log("error");
       });
@@ -34,6 +37,7 @@ const ViewCart = () => {
           <h2>Title:{i.title}</h2>
           <h2>Quantity: {i.quantity}</h2>
           <h2>Price: ¥{i.price}</h2>
+          <button>+</button>
           <button onClick={() => onDelete(i.id)}>Remove Item</button>
         </div>
       ))}

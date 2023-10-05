@@ -15,6 +15,18 @@ const Home = () => {
   const [createOrderProduct] = useCreateOrderProductMutation();
   const {refetch} =   useGetOrderProductQuery();
 
+  const handleDecrement = () => {
+    if (quantity > 1){
+      setQuantity(prevCount => prevCount -1 );
+    }
+  }
+  const handleIncrement = () => {
+    if (quantity < 10){
+      setQuantity(prevCount => prevCount +1 );
+    }
+  }
+
+
   const addToCart = async () => {
     try {
       if (selectedBook) {
@@ -50,15 +62,21 @@ const Home = () => {
             <h4>{i.author}</h4>
             <p>{i.description}</p>
             <p>¥{i.price}</p>
-            <input
+            {/* <input
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-            />
+            /> */}
+            <div className="input">
+              <button type="button" onClick={handleDecrement}>-</button>
+              <div>{quantity}</div>
+              <button type='button' onClick={handleIncrement}>+</button>
+            </div>
             <button
               onClick={() => {
                 setSelectedBook(i);
                 addToCart();
+
               }}
             >
               Add To Cart

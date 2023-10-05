@@ -16,6 +16,9 @@ router.get("/", authorization, async (req, res, next) => {
       where: {
         userId: uniqueUser.id,
         isFulfilled: true,
+      },  
+      include: {
+        order_products: true,
       },
     });
     res.status(200).send({ allOrders });
