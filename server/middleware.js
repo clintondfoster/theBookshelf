@@ -16,9 +16,6 @@ function authorization(req, res, next) {
         req.user = user;
         console.log("middleware req.user", req.user)
 
-        if (!user.admin) {
-            return res.send(403).send("Access denied. Insufficient permissions.");
-        }
         next();
     } catch (error) {
         console.log("Token verification error:", error.message);

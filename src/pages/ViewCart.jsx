@@ -8,11 +8,11 @@ import { useDeleteOrderProductMutation } from "../reducers/api";
 const ViewCart = () => {
 
   const { data, isLoading } = useGetOrderProductQuery();
-  console.log(data);
+  console.log("cart data", data);
 
   useGetOrderProductQuery();
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
+  console.log("cart cart:", cart);
 
   const [removeItem] = useDeleteOrderProductMutation();
   const onDelete = async (id) => {

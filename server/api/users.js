@@ -30,6 +30,10 @@ router.get("/profile", async (req, res, next) => {
   }
 });
 
+// if (!user.admin) {
+//   return res.send(403).send("Access denied. Insufficient permissions.");
+// }
+
 
 //Admin can get/view a user by profile:id
 router.get("/profile/:id", async (req, res, next) => {
@@ -110,7 +114,7 @@ router.post('/', async (req, res, next) => {
     }
   });
   
-  //Admin can - Update user profile & make aa user 'admin'
+  //Admin can - Update user profile & make a user 'admin'
   router.put("/profile/:id", async (req, res, next) => {
   
     const userIdFromToken = req.user.id;
