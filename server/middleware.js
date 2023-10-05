@@ -15,6 +15,7 @@ function authorization(req, res, next) {
         const user = jwt.verify(token, process.env.JWT);
         req.user = user;
         console.log("middleware req.user", req.user)
+
         next();
     } catch (error) {
         console.log("Token verification error:", error.message);
@@ -23,3 +24,4 @@ function authorization(req, res, next) {
 }
 
 module.exports = authorization;
+

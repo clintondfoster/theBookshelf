@@ -6,6 +6,8 @@ const authorization = require("../middleware");
 
 // get an unfulfilled order
 router.get("/", authorization, async (req, res, next) => {
+  console.log("order user", req.user);
+  
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
@@ -16,6 +18,7 @@ router.get("/", authorization, async (req, res, next) => {
         order_products: true,
       },
     });
+    console.log("OpenOrder", openOrder)
     res.status(200).send({ cart: openOrder.order_products });
   } catch (err) {
     console.error(err);

@@ -1,10 +1,13 @@
 import {
   useGetBooksQuery,
   useCreateOrderProductMutation,
-  useGetOrderProductQuery
+  useGetOrderProductQuery,
 } from "../reducers/api";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { addToGuestCart } from "../reducers/guestSlice";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
   const { data, isLoading } = useGetBooksQuery();
@@ -13,7 +16,9 @@ const Home = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [createOrderProduct] = useCreateOrderProductMutation();
-  const {refetch} =   useGetOrderProductQuery();
+  const { refetch } = useGetOrderProductQuery();
+  const me = useSelector((state) => state.auth.credentials)
+  console.log(me)
 
   const handleDecrement = () => {
     if (quantity > 1){
@@ -28,24 +33,35 @@ const Home = () => {
 
 
   const addToCart = async () => {
+    console.log("clicked")
     try {
       if (selectedBook) {
         const response = await createOrderProduct({
           booksId: selectedBook.id,
           quantity: quantity,
           price: selectedBook.price,
-          title: selectedBook.title
+          title: selectedBook.title,
         });
 
         if (response.data) {
           console.log("Added to Cart:", response.data.addedToCart);
         }
-        refetch()
+        refetch();
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
   };
+
+  const dispatch = useDispatch(); 
+  const guestAddToCart = (book)=> {
+      dispatch(addToGuestCart(book))
+    
+  }
+
+  // const loggedIn = false; 
+  const loggedIn = !!me;
+  console.log(loggedIn)
 
   return (
     <div>
@@ -76,7 +92,14 @@ const Home = () => {
               onClick={() => {
                 setSelectedBook(i);
                 addToCart();
-
+                if (loggedIn) {
+                  setSelectedBook(i);
+                  addToCart();
+                } else {
+                  setSelectedBook(i);
+                  guestAddToCart(i);
+                  console.log("guest cart", i); // Move this line inside the block
+                }
               }}
             >
               Add To Cart
@@ -84,7 +107,6 @@ const Home = () => {
           </div>
         ))
       )}
-    
     </div>
   );
 };
