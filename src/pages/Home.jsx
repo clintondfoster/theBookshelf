@@ -90,15 +90,13 @@ const Home = () => {
             </div>
             <button
               onClick={() => {
-                setSelectedBook(i);
-                addToCart();
                 if (loggedIn) {
                   setSelectedBook(i);
                   addToCart();
                 } else {
                   setSelectedBook(i);
                   guestAddToCart(i);
-                  console.log("guest cart", i); // Move this line inside the block
+                  console.log("guest cart", i); 
                 }
               }}
             >

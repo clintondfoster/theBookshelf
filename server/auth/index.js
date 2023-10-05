@@ -17,22 +17,6 @@ router.post("/register", async (req, res, next) => {
         return res.status(400).send("Username and password are required");
       }
 
-      // check if the username already exists
-      const existingUser = await prisma.users.findUnique({
-        where: {username},
-      });
-
-      if (existingUser) {
-        return res.status(400).send("Username already exists");
-      }
-
-      const hashedPassword = await bcrypt.hash(password, salt_rounds);
-
-      const user = await prisma.users.create({
-        data: {
-          username,
-          password: hashedPassword }
-      });
 
     // check if the username already exists
     const existingUser = await prisma.users.findUnique({
