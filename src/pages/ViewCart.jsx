@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 const ViewCart = () => {
 
   const { data, isLoading } = useGetOrderProductQuery();
-  console.log(data);
+  console.log("cart data", data);
 
   useGetOrderProductQuery();
   const cart = useSelector((state) => state.cart);

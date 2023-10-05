@@ -21,6 +21,7 @@ const Home = () => {
   console.log(me)
 
   const addToCart = async () => {
+    console.log("clicked")
     try {
       if (selectedBook) {
         const response = await createOrderProduct({
