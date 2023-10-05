@@ -16,6 +16,7 @@ const Home = () => {
   const {refetch} =   useGetOrderProductQuery();
 
   const addToCart = async () => {
+    console.log("clicked")
     try {
       if (selectedBook) {
         const response = await createOrderProduct({

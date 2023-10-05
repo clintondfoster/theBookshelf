@@ -13,7 +13,6 @@ import ViewCart from "./pages/ViewCart";
 import Checkout from "./pages/Checkout";
 
 
-
 function App() {
  
   // const data = useSelector(state => state.data);
@@ -49,7 +48,7 @@ function App() {
 
 
       {/* Fallback Route */}
-      {/* <Route path="*" element={<Navigate to="/home" />} /> */}
+      <Route path="*" element={<Navigate to="/home" />} />
     </Routes>
   )
 }
