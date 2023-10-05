@@ -29,7 +29,7 @@ router.post("/", authorization, async (req, res, next) => {
   try {
     const openOrder = await prisma.order.findFirst({
       where: {
-        userId: req.user.userId,
+        userId: req.user.id,
         isFulfilled: false,
       },
       include: {
