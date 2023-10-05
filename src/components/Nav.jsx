@@ -43,7 +43,7 @@ function NavBar() {
   }
 
   const accountClick = () => {
-    navigate('/auth')
+    navigate('/login')
   }
   const orderClick = () => {
     navigate('/orderhistory')
