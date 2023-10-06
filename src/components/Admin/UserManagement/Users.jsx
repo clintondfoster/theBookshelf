@@ -15,6 +15,7 @@ function Users() {
   const [deleteUser] = useDeleteUserMutation();
   const [editUser] = useEditUserMutation();
 
+  console.log("In users - users", users);
   //meQuery for current user data
   const {
     data: currentUser,
@@ -65,14 +66,15 @@ function Users() {
 
   return (
     <div>
-      <h2>Testing users</h2>
+      <h2>User Dashboard</h2>
+      <h3>Welcome {currentUser.firstName}</h3>
       {isUserLoading && <p>Loading current user's data...</p>}
       {isUserError && <p>Error fetching current user data.</p>}
       {currentUser && (
         <div>
           <p>First Name: {currentUser.firstName}</p>
           <p>Last Name: {currentUser.lastName}</p>
-          <p>Email Name: {currentUser.email}</p>
+          <p>Email: {currentUser.email}</p>
           <p>Admin Status: {currentUser.isAdmin}</p>
         </div>
       )}

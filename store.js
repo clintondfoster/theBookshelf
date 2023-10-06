@@ -3,19 +3,32 @@ import { storeApi } from "./src/reducers/api";
 import searchReducer from './src/reducers/searchSlice'
 import authReducer from "./src/reducers/authSlice"
 import cartReducer from "./src/reducers/api.js"
-// import { orderProductApi } from "./src/reducers/orderproduct";
+import guestCartReducer from "./src/reducers/guestSlice";
+import {persistStore, persistReducer} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { combineReducers } from "@reduxjs/toolkit";
 
-const store = configureStore({
-  reducer: {
-    [storeApi.reducerPath]: storeApi.reducer,
+const persistConfig = {
+  key: 'root', 
+  storage, 
+}
+
+const rootReducer = combineReducers( {
+  [storeApi.reducerPath]: storeApi.reducer,
     search: searchReducer,
     auth: authReducer,
     cart: cartReducer,
-    // [orderProductApi.reducerPath]: orderProductApi.reducer,
+    guestCart: guestCartReducer
+})
 
-  },
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(storeApi.middleware),
 });
 
-export default store;
+const persistor = persistStore(store)
+
+export { store, persistor };

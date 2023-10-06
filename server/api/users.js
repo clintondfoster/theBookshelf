@@ -7,6 +7,24 @@ const authorization = require("../middleware");
 //Apply the middleware to every route in this router
 router.use(authorization);
 
+//Admin can view all users
+router.get("/", async (req, res, next) => {
+  try {
+    if (!req.user || !req.user.isAdmin) {
+      console.log("received request to fetch all users")
+      console.log("user details from token:", req.user)
+      console.log("Auth header:", req.headers.authorization)
+      return res.status(403).send("Access denied. Admin only.");
+    }
+
+    const allUsers = await prisma.users.findMany();
+
+    res.json(allUsers);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //User can get/view their own profile
 router.get("/profile", async (req, res, next) => {
   try {
@@ -62,24 +80,24 @@ router.get("/profile/:id", async (req, res, next) => {
 });
 
 
-// router.put("/profile", async (req, res, next) => {
-//   try {
-//     if (!req.user) {
-//         return res.status(401).send("User not authenticated");
-//     }
+router.put("/:id", async (req, res, next) => {
+  try {
+    if (!req.user) {
+        return res.status(401).send("User not authenticated");
+    }
 
-//     const updatedInfo = req.body;
+    const updatedInfo = req.body;
 
-//     const updatedUser = await prisma.users.update({
-//         where: { id: req.user.id },
-//         data: updatedInfo,
-//     });
+    const updatedUser = await prisma.users.update({
+        where: { id: req.user.id },
+        data: updatedInfo,
+    });
 
-//     res.send(updatedUser);
-// } catch (err) {
-//     next(err);
-// }
-// });
+    res.send(updatedUser);
+} catch (err) {
+    next(err);
+}
+});
 
 //Create user - Admin Only
 router.post('/', async (req, res, next) => {

@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createSlice } from "@reduxjs/toolkit";
 
+//session storage key
 const CREDENTIALS = "credentials";
 
 export const storeApi = createApi({
@@ -22,6 +23,7 @@ export const storeApi = createApi({
       return headers;
     },
   }),
+  //Book endpoints
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => "api/books",
@@ -52,11 +54,7 @@ export const storeApi = createApi({
         };
       },
     }),
-
-    //addBookToCart etc
-    // (!token) do function, just in local storage
-    // (token) run function, auth to verify user, then go to cart
-
+    //User endpoints
     getUsers: builder.query({
       query: () => "api/users",
     }),
@@ -87,7 +85,7 @@ export const storeApi = createApi({
       },
     }),
 
-    // order products
+    // order products enpoints
     getOrderProduct: builder.query({
       query: () => "api/orderproduct",
     }),
@@ -115,7 +113,7 @@ export const storeApi = createApi({
       },
     }),
 
-    // order endpoints (create, get all, get single order)
+    // order endpoints (create, get all, get single order) endpoints
     getOrder: builder.query({
       query: () => "api/order",
     }),
@@ -134,7 +132,16 @@ export const storeApi = createApi({
   }),
 });
 
-//add slice
+
+function storeToken(state, { payload }) {
+  console.log('storeToken is running')
+  state.credentials = { token: payload.token };
+  console.log("Token recieved:", payload.token);
+  window.sessionStorage.setItem(
+      CREDENTIALS,
+      JSON.stringify(payload)
+  )
+}
 
 const initialState = [];
 

@@ -44,11 +44,17 @@ function NavBar() {
   };
 
   const accountClick = () => {
-    navigate("/auth");
+    navigate("/me");
   };
 
   const adminNavClick = () => {
     navigate("/admin");
+  };
+  const loginClick = () => {
+    navigate("/login");
+  };
+  const orderClick = () => {
+    navigate("/orderhistory");
   };
 
   return (
@@ -102,10 +108,11 @@ function NavBar() {
             </Form>
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
+            <Nav.Link onClick={loginClick}>Login</Nav.Link>
             {currentUser?.isAdmin && (
               <Nav.Link onClick={adminNavClick}>Admin Dashboard</Nav.Link>
             )}
-            ;
+            ;<Nav.Link onClick={orderClick}>My Order</Nav.Link>
             <div>
               {user.userId && <h1>Welcome {user.userId}</h1>}
               {user.userId && <button onClick={logout}>Logout</button>}

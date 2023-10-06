@@ -13,6 +13,7 @@ import ViewCart from "./pages/ViewCart";
 import Checkout from "./pages/Checkout";
 import jwtDecode from "jwt-decode";
 import { useMeQuery } from "./reducers/authSlice";
+import OrderHistory from "./pages/OrderHistory";
 
 function App() {
   // const data = useSelector(state => state.data);
