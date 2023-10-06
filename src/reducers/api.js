@@ -103,12 +103,11 @@ export const storeApi = createApi({
       }),
     }),
     updateOrderProduct: builder.mutation({
-      query(data) {
-        const { id, ...body } = data;
+      query({id,body}) {
         return {
           url: `api/orderproduct/${id}`,
           method: "PUT",
-          body,
+          body
         };
       },
     }),
@@ -175,7 +174,13 @@ const cartSlice = createSlice({
         return [...payload.createOrder]
 
       }
-    )  
+    ),
+    builder.addMatcher(
+      storeApi.endpoints.updateOrderProduct.matchFulfilled,
+      (state, { payload }) => {
+        return state.map((item)=> item.id === payload.id ? payload : item)
+      }
+    )    
   },
 });
 

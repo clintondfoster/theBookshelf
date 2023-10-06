@@ -6,6 +6,7 @@ import {
 import { addToGuestCart } from "../reducers/guestSlice";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import RandomImage from "../components/inputs/RandomImage";
 
 function Product({ book }) {
   const dispatch = useDispatch();
@@ -13,14 +14,18 @@ function Product({ book }) {
   const [createOrderProduct] = useCreateOrderProductMutation();
   const { refetch } = useGetOrderProductQuery();
 
-  const me = useSelector((state) => state.auth.credentials.token);
-  const loggedIn = !!me;
-  // const loggedIn = false;
-  // console.log(me)
 
-  // const me = useSelector((state) => state.auth.credentials);
-  // const loggedIn = !!me;
-  // console.log(me);
+function Product({book}) {
+    const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(1);
+    const [createOrderProduct] = useCreateOrderProductMutation();
+    const { refetch } = useGetOrderProductQuery();
+
+    const me = useSelector((state) => state.auth.credentials.token)
+    const loggedIn = !!me;
+    // const loggedIn = false;
+    // console.log(me)
+
 
   const guestAddToCart = (book) => {
     dispatch(addToGuestCart(book));
@@ -41,6 +46,7 @@ function Product({ book }) {
       <Link to={`/book/${book.id}`}>
         <h2>{book.title}</h2>
       </Link>
+      <RandomImage/> 
       <h4>{book.author}</h4>
       <p>{book.description}</p>
       <p>¥{book.price}</p>
