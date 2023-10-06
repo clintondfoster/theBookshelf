@@ -18,7 +18,7 @@ function NavBar() {
   console.log(searchInput);
 
 
-  const user = useSelector((state) => state.auth.credentials.user || "");
+  // const user = useSelector((state) => state.auth.credentials.user || "");
   const { data: currentUser, isLoading } = useMeQuery();
 
 

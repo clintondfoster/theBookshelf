@@ -20,10 +20,6 @@ function Product({book}) {
     // console.log(me)
 
 
-  const me = useSelector((state) => state.auth.credentials);
-  const loggedIn = !!me;
-  console.log(me);
-
   const guestAddToCart = (book) => {
     dispatch(addToGuestCart(book));
   };
