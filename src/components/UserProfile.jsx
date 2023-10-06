@@ -1,191 +1,181 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TextInput from "./inputs/TextInput";
 import { useEditUserMutation } from "../reducers/api";
 import { useMeQuery } from "../reducers/authSlice";
 import { useParams } from "react-router-dom";
 
 function UserProfile() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [streetAddress, setStreetAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [phone, setPhone] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    phone: "",
+  });
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const { id } = useParams();
-  const { data: userData, isLoading, isError } = useMeQuery();
+  const { data: userData, isLoading, isError, refetch } = useMeQuery();
   const [editUser, { isLoading: isSaving }] = useEditUserMutation();
 
-  useEffect(() => {
-    if (userData) {
-      setFirstName(userData.firstName || "");
-      setLastName(userData.lastName || "");
-      setEmail(userData.email || "");
-      setStreetAddress(userData.streetAddress || "");
-      setCity(userData.city || "");
-      setState(userData.state || "");
-      setZipCode(userData.zipCode || "");
-      setPhone(userData.phone || "");
-      setIsAdmin(userData.admin || false);
-    }
-  }, [userData]);
+  const resetFields = () => {
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      streetAddress: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      phone: "",
+    });
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const updatedData = {
-        id: userData.id,
-        firstName,
-        lastName,
-        email,
-        streetAddress,
-        city,
-        state,
-        zipCode,
-        phone,
-        admin: isAdmin,
-      };
 
+    const updatedData = {
+      id: userData.id,
+      ...formData,
+      isAdmin: userData.isAdmin,
+    };
+
+    Object.keys(updatedData).forEach(
+      (key) => !updatedData[key] && delete updatedData[key]
+    );
+
+    try {
       await editUser(updatedData).unwrap();
-      alert("Profile updated successfully");
+      refetch();
+      setIsUpdated(true);
+      resetFields();
+      setTimeout(() => {
+        setIsUpdated(false);
+      }, 3000);
     } catch (error) {
       alert(`Error updating profile: ${error.message}`);
     }
   };
 
-  if (isLoading) {
-    return <div>Loading your profile...</div>;
-  }
-
-  if (isError) {
-    return (
-      <div>
-        Error loading your profile: {isError.message}. Please try again later.
-      </div>
-    );
-  }
+  if (isLoading) return <div>Loading your profile...</div>;
+  if (isError)
+    return <div>Error loading your profile. Please try again later.</div>;
 
   const displayName = userData.firstName || userData.username;
 
-  const isUserDataIncomplete = (data) => {
-    const checkProps = [
-      "email",
-      "phone",
-      "city",
-      "firstName",
-      "lastName",
-      "state",
-      "streetAddress",
-      "zipCode",
-    ];
-
-    return checkProps.some((prop) => !data[prop]);
-  };
-
   return (
     <div>
-      <h2>Update your profile</h2>
+      <h1>My Account</h1>
       <h3>Welcome {displayName},</h3>
-
-      <div className="user-info">
-        <h2>
-          {isUserDataIncomplete(userData)
-            ? "Update Your Profile Below"
-            : "Your Profile"}
-        </h2>
-        {userData.firstName && (
+      {userData && (
+        <div className="user-info">
+          <h5>
+            {formData.firstName || userData.firstName
+              ? "Your Profile"
+              : "Update Your Profile Below"}
+          </h5>
+          {isUpdated && <p>Your profile updated successfully!</p>}
           <p>
             <strong>First Name:</strong> {userData.firstName}
           </p>
-        )}
-        {userData.lastName && (
           <p>
             <strong>Last Name:</strong> {userData.lastName}
           </p>
-        )}
-        {userData.email && (
           <p>
             <strong>Email:</strong> {userData.email}
           </p>
-        )}
-        {userData.streetAddress && (
           <p>
             <strong>Street Address:</strong> {userData.streetAddress}
           </p>
-        )}
-        {userData.city && (
           <p>
             <strong>City:</strong> {userData.city}
           </p>
-        )}
-        {userData.state && (
           <p>
             <strong>State:</strong> {userData.state}
           </p>
-        )}
-        {userData.zipCode && (
           <p>
             <strong>Zip Code:</strong> {userData.zipCode}
           </p>
-        )}
-        {userData.phone && (
           <p>
             <strong>Phone:</strong> {userData.phone}
           </p>
-        )}
-        {userData.admin && (
-          <p>
-            <strong>Admin:</strong> Yes
-          </p>
-        )}
-      </div>
+          {userData.isAdmin && (
+            <p>
+              <strong>Status:</strong> Admin
+            </p>
+          )}
+          {!userData.isAdmin && (
+            <p>
+              <strong>Status:</strong> User
+            </p>
+          )}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <label>
           First Name
-          <TextInput vl={firstName} chg={setFirstName} />
+          <TextInput
+            vl={formData.firstName}
+            chg={(val) => handleInputChange("firstName", val)}
+          />
         </label>
         <label>
           Last Name
-          <TextInput vl={lastName} chg={setLastName} />
+          <TextInput
+            vl={formData.lastName}
+            chg={(val) => handleInputChange("lastName", val)}
+          />
         </label>
         <label>
           Email
-          <TextInput vl={email} chg={setEmail} />
+          <TextInput
+            vl={formData.email}
+            chg={(val) => handleInputChange("email", val)}
+          />
         </label>
         <label>
           Street Address
-          <TextInput vl={streetAddress} chg={setStreetAddress} />
+          <TextInput
+            vl={formData.streetAddress}
+            chg={(val) => handleInputChange("streetAddress", val)}
+          />
         </label>
         <label>
           City
-          <TextInput vl={city} chg={setCity} />
+          <TextInput
+            vl={formData.city}
+            chg={(val) => handleInputChange("city", val)}
+          />
         </label>
         <label>
           State
-          <TextInput vl={state} chg={setState} />
+          <TextInput
+            vl={formData.state}
+            chg={(val) => handleInputChange("state", val)}
+          />
         </label>
         <label>
           Zip Code
-          <TextInput vl={zipCode} chg={setZipCode} />
+          <TextInput
+            vl={formData.zipCode}
+            chg={(val) => handleInputChange("zipCode", val)}
+          />
         </label>
         <label>
           Phone
-          <TextInput vl={phone} chg={setPhone} />
+          <TextInput
+            vl={formData.phone}
+            chg={(val) => handleInputChange("phone", val)}
+          />
         </label>
-        {userData.admin && (
-          <label>
-            Admin:
-            <input
-              type="checkbox"
-              checked={isAdmin}
-              onChange={(e) => setIsAdmin(e.target.checked)}
-            />
-          </label>
-        )}
         <button type="submit" disabled={isSaving}>
           Save Changes
         </button>
