@@ -21,6 +21,7 @@ const ViewCart = () => {
   
   useGetOrderProductQuery();
   const cart = useSelector((state) => state.cart);
+  console.log(cart)
   const guestCart = useSelector((state) => state.guestCart)
   const me = useSelector((state) => state.auth.credentials)
 
@@ -40,9 +41,25 @@ const ViewCart = () => {
   // const loggedIn = false 
   const loggedIn = !!me;
   const dispatch = useDispatch()
-  const handleRemoveFromGuestCart = () => {
-    dispatch(removeFromGuestCart())
+  const handleRemoveFromGuestCart = (bookId) => {
+    dispatch(removeFromGuestCart(bookId))
   }
+
+
+  // const [totalPrice, setTotalPrice] = useState(0)
+  // useEffect(()=> {
+  //   const calcTotal = (cart) => {
+  //     let result = 0; 
+  //     cart.forEach((book)=> {
+  //       result += book.price * book.quantity
+  //     })
+  //     return result
+  //   }
+  //   const newTotal = calcTotal(cart)
+  //   setTotalPrice(newTotal)
+  // }, [cart])
+  const totalPrice = cart.reduce((acc, curr)=> acc + (curr.price * curr.quantity), 0)
+
 
   return (
     <div>
@@ -52,12 +69,13 @@ const ViewCart = () => {
           {cart.map((i) => (
             <CartItemDB onClickFunc={onDelete} book={i}/>
           ))}
+          <h2>Total Price: ¥{totalPrice}</h2>
         </>
       ) : (
         <>
           <h2>Your Cart</h2>
           {guestCart.map((i) => (
-            <CartItemLS onClickFunc={handleRemoveFromGuestCart} />
+            <CartItemLS onClickFunc={handleRemoveFromGuestCart} book={i}/>
           ))}
         </>
       )}

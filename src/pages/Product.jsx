@@ -7,11 +7,18 @@ import { addToGuestCart } from "../reducers/guestSlice";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-function Product({ book }) {
-  const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
-  const [createOrderProduct] = useCreateOrderProductMutation();
-  const { refetch } = useGetOrderProductQuery();
+
+function Product({book}) {
+    const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(1);
+    const [createOrderProduct] = useCreateOrderProductMutation();
+    const { refetch } = useGetOrderProductQuery();
+
+    const me = useSelector((state) => state.auth.credentials.token)
+    const loggedIn = !!me;
+    // const loggedIn = false;
+    // console.log(me)
+
 
   const me = useSelector((state) => state.auth.credentials);
   const loggedIn = !!me;
@@ -40,35 +47,33 @@ function Product({ book }) {
       <p>{book.description}</p>
       <p>¥{book.price}</p>
 
-      <div className="input">
-        <button type="button" onClick={handleDecrement}>
-          -
-        </button>
-        <div>{quantity}</div>
-        <button type="button" onClick={handleIncrement}>
-          +
-        </button>
-      </div>
-      <button
-        onClick={async () => {
-          if (loggedIn) {
-            console.log("hit");
-            await createOrderProduct({
-              booksId: book.id,
-              quantity: quantity,
-              price: book.price,
-              title: book.title,
-            });
-            refetch();
-          } else {
-            dispatch(addToGuestCart(book));
-          }
-        }}
-      >
-        Add To Cart
-      </button>
+    
+    <div className="input">
+      <button type="button" onClick={handleDecrement}>-</button>
+      <div>{quantity}</div>
+      <button type='button' onClick={handleIncrement}>+</button>
     </div>
-  );
+    <button
+      onClick={async () => {
+        if (loggedIn) {
+            console.log("hit")
+          await createOrderProduct({
+            booksId: book.id,
+            quantity: quantity,
+            price: book.price,
+            title: book.title
+          })
+          refetch()
+        } else {
+            dispatch(addToGuestCart({...book, quantity: quantity}));
+        }
+      }}
+    >
+      Add To Cart
+    </button>
+  </div>
+  )
+
 }
 
 export default Product;
