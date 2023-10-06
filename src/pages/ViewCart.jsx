@@ -1,5 +1,5 @@
 // import { useGetOpenOrderQuery } from "../reducers/orderproduct";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useGetOrderProductQuery, useGetBookByIdQuery } from "../reducers/api";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -23,7 +23,9 @@ const ViewCart = () => {
   const cart = useSelector((state) => state.cart);
   console.log(cart)
   const guestCart = useSelector((state) => state.guestCart)
-  const me = useSelector((state) => state.auth.credentials)
+  console.log(`guest cart`, guestCart)
+  const me = useSelector((state) => state.auth.credentials.token)
+  console.log('me', me)
 
 
   const [removeItem] = useDeleteOrderProductMutation();
