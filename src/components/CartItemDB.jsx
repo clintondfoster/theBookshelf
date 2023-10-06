@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useUpdateOrderProductMutation } from "../reducers/api";
+import RandomImage from './inputs/RandomImage';
+ 
 
 function CartItemDB({onClickFunc, book}) {
   const [quantity, setQuantity] = useState(book.quantity);
@@ -30,6 +32,7 @@ const onUpdate = async (id,qty) => {
   return (
     <div>
     <h2>Title:{book.title}</h2>
+    <RandomImage/> 
     <div className="input">
       <button onClick={handleDecrement}>-</button>
       <div>{quantity}</div>
