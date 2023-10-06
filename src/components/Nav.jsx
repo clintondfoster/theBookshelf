@@ -74,30 +74,6 @@ function NavBar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <NavDropdown title="Genres" id="navbarScrollingDropdown">
-              <NavDropdown.Item>
-                <Link to={"/genres/fiction"}>Fiction</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link to={"/genres/scifi"}> Sci-Fi</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link to={"/genres/fantasy"}>Fantasy</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link to={"/genres/mystery"}>Mystery</Link>
-              </NavDropdown.Item>
-
-              <NavDropdown.Item>
-                <Link to={"/genres/philosophy"}> Philosophy</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link to={"/genres/romance"}> Romance</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link to={"/genres/horror"}> Horror</Link>
-              </NavDropdown.Item>
-            </NavDropdown>
             <Form className="d-flex">
               <Form.Control
                 type="search"

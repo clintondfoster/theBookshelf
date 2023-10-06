@@ -6,6 +6,7 @@ import {
 import { addToGuestCart } from "../reducers/guestSlice";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import RandomImage from "../components/inputs/RandomImage";
 
 
 function Product({book}) {
@@ -39,6 +40,7 @@ function Product({book}) {
       <Link to={`/book/${book.id}`}>
         <h2>{book.title}</h2>
       </Link>
+      <RandomImage/> 
       <h4>{book.author}</h4>
       <p>{book.description}</p>
       <p>¥{book.price}</p>
