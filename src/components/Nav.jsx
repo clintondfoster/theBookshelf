@@ -17,12 +17,13 @@ function NavBar() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
 
-
   // const user = useSelector((state) => state.auth.credentials.user || "");
-  const { data: currentUser, isLoading } = useMeQuery();
+  // const { data: currentUser, isLoading } = useMeQuery();
+
 
 
   const user = useSelector((state)=> state.auth.credentials || "")
+
 
   const [logout] = useLogoutMutation();
 
@@ -89,7 +90,7 @@ function NavBar() {
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
             <Nav.Link onClick={loginClick}>Login</Nav.Link>
-            {currentUser?.isAdmin && (
+            {currentUser.isAdmin && (
               <Nav.Link onClick={adminNavClick}>Admin Dashboard</Nav.Link>
             )}
             ;<Nav.Link onClick={orderClick}>My Order</Nav.Link>
