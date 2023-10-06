@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
-import { useCreateOrderProductMutation, useGetOrderProductQuery } from '../reducers/api';
+import React, { useState } from "react";
+import {
+  useCreateOrderProductMutation,
+  useGetOrderProductQuery,
+} from "../reducers/api";
 import { addToGuestCart } from "../reducers/guestSlice";
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 
 function Product({book}) {
     const dispatch = useDispatch();
@@ -16,28 +20,32 @@ function Product({book}) {
     // console.log(me)
 
 
+  const me = useSelector((state) => state.auth.credentials);
+  const loggedIn = !!me;
+  console.log(me);
+
   const guestAddToCart = (book) => {
     dispatch(addToGuestCart(book));
   };
 
-    const handleDecrement = () => {
-        if (quantity > 1){
-          setQuantity(prevCount => prevCount -1 );
-        }
-      }
-      const handleIncrement = () => {
-        if (quantity < 10){
-          setQuantity(prevCount => prevCount +1 );
-        }
-      }
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity((prevCount) => prevCount - 1);
+    }
+  };
+  const handleIncrement = () => {
+    if (quantity < 10) {
+      setQuantity((prevCount) => prevCount + 1);
+    }
+  };
   return (
-    <div >
-    <Link to={`/book/${book.id}`}>
-      <h2>{book.title}</h2>
-    </Link>
-    <h4>{book.author}</h4>
-    <p>{book.description}</p>
-    <p>¥{book.price}</p>
+    <div>
+      <Link to={`/book/${book.id}`}>
+        <h2>{book.title}</h2>
+      </Link>
+      <h4>{book.author}</h4>
+      <p>{book.description}</p>
+      <p>¥{book.price}</p>
 
     
     <div className="input">
@@ -65,6 +73,7 @@ function Product({book}) {
     </button>
   </div>
   )
+
 }
 
-export default Product
+export default Product;

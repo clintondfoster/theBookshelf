@@ -11,14 +11,19 @@ import { showResult } from "../reducers/searchSlice";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useLogoutMutation } from "../reducers/authSlice";
-
-
+import { useMeQuery } from "../reducers/authSlice";
 
 function NavBar() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
 
+
+  const user = useSelector((state) => state.auth.credentials.user || "");
+  const { data: currentUser, isLoading } = useMeQuery();
+
+
   const user = useSelector((state)=> state.auth.credentials || "")
+
   const [logout] = useLogoutMutation();
 
   const dispatch = useDispatch();
@@ -35,25 +40,33 @@ function NavBar() {
   };
 
   const homeClick = () => {
-    navigate('/home')
-  }
+    navigate("/home");
+  };
 
   const cartClick = () => {
-    navigate('/cart')
-  }
+    navigate("/cart");
+  };
 
   const accountClick = () => {
-    navigate('/login')
-  }
-  const orderClick = () => {
-    navigate('/orderhistory')
-  }
+    navigate("/me");
+  };
 
+  const adminNavClick = () => {
+    navigate("/admin");
+  };
+  const loginClick = () => {
+    navigate("/login");
+  };
+  const orderClick = () => {
+    navigate("/orderhistory");
+  };
 
   return (
     <Navbar expand="lg" bg="dark" variant="dark">
       <Container fluid>
-        <Navbar.Brand onClick={homeClick}><div className="logo">The Bookshelf</div></Navbar.Brand>
+        <Navbar.Brand onClick={homeClick}>
+          <div className="logo">The Bookshelf</div>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -99,12 +112,15 @@ function NavBar() {
             </Form>
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
-            <Nav.Link onClick={orderClick}>My Order</Nav.Link>
+            <Nav.Link onClick={loginClick}>Login</Nav.Link>
+            {currentUser?.isAdmin && (
+              <Nav.Link onClick={adminNavClick}>Admin Dashboard</Nav.Link>
+            )}
+            ;<Nav.Link onClick={orderClick}>My Order</Nav.Link>
             <div>
               {user.token && <h1>Welcome {user.userId}</h1>}
               {user.token && <button onClick={logout}>Logout</button>}
             </div>
-  
           </Nav>
         </Navbar.Collapse>
       </Container>

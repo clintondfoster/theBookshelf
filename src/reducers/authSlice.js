@@ -38,9 +38,7 @@ function storeToken(state, { payload }) {
     console.log("Token recieved:", payload.token);
     window.sessionStorage.setItem(
         CREDENTIALS,
-        JSON.stringify({
-            token: payload.token,
-        })
+        JSON.stringify(payload)
     )
 }
 

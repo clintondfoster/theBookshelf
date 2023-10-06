@@ -27,6 +27,16 @@ router.post("/register", async (req, res, next) => {
       return res.status(400).send("Username already exists");
     }
 
+    // const token = jwt.sign({ id: user.id,  }, process.env.JWT)
+    //   res.send({
+    //     token,
+    //     user: {
+    //       userId: user.id,
+    //       username: user.username,
+    //     }
+    //   });
+    // } catch (err) {
+    //   next(err);
     const hashedPassword = await bcrypt.hash(password, salt_rounds);
 
     const user = await prisma.users.create({
@@ -43,7 +53,7 @@ router.post("/register", async (req, res, next) => {
       },
     });
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT);
+    const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.JWT);
 
     res.status(201).send({
       message: "You have registered a new account!",
@@ -51,6 +61,7 @@ router.post("/register", async (req, res, next) => {
       user: {
         userId: user.id,
         username: user.username,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (err) {
@@ -80,12 +91,13 @@ router.post("/login", async (req, res, next) => {
       return res.status(401).send("Invalid Login");
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT);
+    const token = jwt.sign({ id: user.id, isAdmin: user.isAdmin }, process.env.JWT);
     res.send({
       token,
       user: {
         userId: user.id,
         username: user.username,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (err) {

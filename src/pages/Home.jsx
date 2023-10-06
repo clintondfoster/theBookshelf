@@ -1,4 +1,3 @@
-
 import {
   useGetBooksQuery,
   useCreateOrderProductMutation,
@@ -22,16 +21,17 @@ const Home = () => {
   // const me = useSelector((state) => state.auth.credentials); //
   // console.log(me);
 
-  // const handleDecrement = () => {
-  //   if (quantity > 1) {
-  //     setQuantity((prevCount) => prevCount - 1); //
-  //   }
-  // };
-  // const handleIncrement = () => {
-  //   if (quantity < 10) {
-  //     setQuantity((prevCount) => prevCount + 1); //
-  //   }
-  // };
+  // const addToCart = async () => {
+  //   // console.log("clicked")
+  //   try {
+  //     if (selectedBook) {
+  //       const response = await createOrderProduct({
+  //         booksId: selectedBook.id,
+  //         quantity: quantity,
+  //         price: selectedBook.price,
+  //         title: selectedBook.title
+  //       });
+  //     }
 
   // const addToCart = async () => {
   //   console.log("clicked");
@@ -71,7 +71,6 @@ const Home = () => {
         <h1>No Books Found</h1>
       ) : (
         data.map((i) => <Product key={i.id} book={i} />)
-
       )}
     </div>
   );
