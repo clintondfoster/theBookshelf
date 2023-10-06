@@ -10,9 +10,10 @@ function Product({book}) {
     const [createOrderProduct] = useCreateOrderProductMutation();
     const { refetch } = useGetOrderProductQuery();
 
-    const me = useSelector((state) => state.auth.credentials)
+    const me = useSelector((state) => state.auth.credentials.token)
     const loggedIn = !!me;
-    console.log(me)
+    // const loggedIn = false;
+    // console.log(me)
 
 
   const guestAddToCart = (book) => {
@@ -56,7 +57,7 @@ function Product({book}) {
           })
           refetch()
         } else {
-            dispatch(addToGuestCart(book));
+            dispatch(addToGuestCart({...book, quantity: quantity}));
         }
       }}
     >
