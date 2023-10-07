@@ -16,7 +16,7 @@ function Search() {
   console.log(searchInput)
 
   return (
-    <div>
+    <div  className="content">
       {isLoading ? (
         <h1>loading....</h1>
       ) : (
