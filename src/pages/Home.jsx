@@ -64,7 +64,7 @@ const Home = () => {
   // console.log(loggedIn);
 
   return (
-    <div>
+    <div className="content">
       {isLoading ? (
         <h1>Loading...</h1>
       ) : data.length === 0 ? (

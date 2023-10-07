@@ -6,7 +6,7 @@ import Users from "./UserManagement/Users";
 
 function AdminDashboard() {
   return (
-    <div>
+    <div className="adminDash">
       <AdminNavBar />
       <Routes>
         <Route path="/usermanagement/users" element={<Users />} />

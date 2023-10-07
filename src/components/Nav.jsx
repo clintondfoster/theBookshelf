@@ -64,7 +64,7 @@ function NavBar() {
   };
 
   return (
-    <Navbar expand="lg" bg="dark" variant="dark">
+    <Navbar expand="lg" bg="dark" variant="dark" className="navbar"   id="navbar">
       <Container fluid>
         <Navbar.Brand onClick={homeClick}>
           <div className="logo">The Bookshelf</div>
@@ -95,10 +95,11 @@ function NavBar() {
               <Nav.Link onClick={adminNavClick}>Admin Dashboard</Nav.Link>
             )}
             ;<Nav.Link onClick={orderClick}>My Order</Nav.Link>
-            <div>
-              {user.token && <h1>Welcome {user.userId}</h1>}
-              {user.token && <button onClick={logout}>Logout</button>}
-            </div>
+            {/* <div> */}
+              {/* {user.token && <h4 id="welcome">Welcome {user.userId}</h4>} commented this out because it was causing size distortion in navbar */}
+              {/* {user.token && <button onClick={logout}>Logout</button>} */}
+              {user.token && <Nav.Link onClick={logout}>Logout</Nav.Link>}
+            {/* </div> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
