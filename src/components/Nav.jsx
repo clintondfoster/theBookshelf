@@ -16,9 +16,10 @@ import { useMeQuery } from "../reducers/authSlice";
 function NavBar() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
+  const { data: currentUser, isLoading } = useMeQuery();
 
   // const user = useSelector((state) => state.auth.credentials.user || "");
-  // const { data: currentUser, isLoading } = useMeQuery();
+
 
 
 
