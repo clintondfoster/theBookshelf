@@ -1,81 +1,88 @@
-import React, { useState } from "react";
 import {
+  useGetBooksQuery,
   useCreateOrderProductMutation,
   useGetOrderProductQuery,
 } from "../reducers/api";
-import { addToGuestCart } from "../reducers/guestSlice";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import RandomImage from "../components/inputs/RandomImage";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { addToGuestCart } from "../reducers/guestSlice";
+import { useDispatch } from "react-redux";
+import Product from "./Product";
 
-function Product({ book }) {
-  const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
-  const [createOrderProduct] = useCreateOrderProductMutation();
-  const { refetch } = useGetOrderProductQuery();
 
-  const me = useSelector((state) => state.auth.credentials.token);
-  const loggedIn = !!me;
-  // const loggedIn = false;
-  // console.log(me)
+const Home = () => {
+  const { data, isLoading } = useGetBooksQuery();
+  // console.log(data);
 
-  const guestAddToCart = (book) => {
-    dispatch(addToGuestCart(book));
-  };
+  // const [selectedBook, setSelectedBook] = useState(null);
+  // const [quantity, setQuantity] = useState(1); //
+  // const [createOrderProduct] = useCreateOrderProductMutation(); //
+  // const { refetch } = useGetOrderProductQuery(); //
+  // const me = useSelector((state) => state.auth.credentials); //
+  // console.log(me);
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity((prevCount) => prevCount - 1);
-    }
-  };
-  const handleIncrement = () => {
-    if (quantity < 10) {
-      setQuantity((prevCount) => prevCount + 1);
-    }
-  };
+  // const addToCart = async () => {
+  //   // console.log("clicked")
+  //   try {
+  //     if (selectedBook) {
+  //       const response = await createOrderProduct({
+  //         booksId: selectedBook.id,
+  //         quantity: quantity,
+  //         price: selectedBook.price,
+  //         title: selectedBook.title
+  //       });
+  //     }
+
+  // const addToCart = async () => {
+  //   console.log("clicked");
+  //   try {
+  //     if (selectedBook) {
+  //       const response = await createOrderProduct({
+  //         booksId: selectedBook.id,
+  //         quantity: quantity,
+  //         price: selectedBook.price,
+  //         title: selectedBook.title,
+  //       });
+
+  //       if (response.data) {
+  //         console.log("Added to Cart:", response.data.addedToCart);
+  //       }
+  //       refetch();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding to cart:", error);
+  //   }
+  // };
+
+  // const dispatch = useDispatch();
+  // const guestAddToCart = (book) => {
+  //   dispatch(addToGuestCart(book));
+  // };
+
+  // // const loggedIn = false;
+  // const loggedIn = !!me; //
+  // console.log(loggedIn);
+
   return (
-    <div style={{textAlign:'center'} }>
-      <div style={{boxSizing:'border-box',width:'330px', height: '450px', marginTop:'20px', marginLeft:'15px',boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)'}}>
-      <Link to={`/book/${book.id}`} style={{textDecoration:'none'}}>
-        <h2 style={{color:'CornflowerBlue'}}>{book.title}</h2>
-      </Link>
-      <RandomImage />
-      <h4 style={{color:'DarkCyan'}}>{book.author}</h4>
-      <p style={{color:'DarkCyan'}}>{book.description}</p>
-      <p style={{color:'DarkGreen'}}>¥{book.price}</p>
-      </div>
-
-      <div className="button"style={{display: 'flex', justifyContent:'center'
-    }} >
-        <button  onClick={handleDecrement}>
-          -
-        </button>
-        <div>{quantity}</div>
-        <button onClick={handleIncrement}>
-          +
-        </button>
-
-      <button
-        onClick={async () => {
-          if (loggedIn) {
-            console.log("hit");
-            await createOrderProduct({
-              booksId: book.id,
-              quantity: quantity,
-              price: book.price,
-              title: book.title,
-            });
-            refetch();
-          } else {
-            dispatch(addToGuestCart({ ...book, quantity: quantity }));
-          }
-        }}
-      >
-        Add To Cart
-      </button>
-      </div>
+    <div style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+      justifyContent: 'left',
+      alignItems: 'left',
+      padding: '20px',
+    }} className="content">
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : data.length === 0 ? (
+        <h1>No Books Found</h1>
+      ) : (
+        data.map((i) => <Product key={i.id} book={i} />)
+      )}
     </div>
   );
-}
+  
+};
 
-export default Product;
+export default Home;
