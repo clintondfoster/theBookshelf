@@ -30,8 +30,8 @@ const onUpdate = async (id,qty) => {
 };
 
   return (
-    <div>
-    <h2>Title:{book.title}</h2>
+    <div className='bookCard'>
+    <h2 style={{ color: "DarkCyan" }}>{book.title}</h2>
     <RandomImage/> 
     <div className="input">
       <button onClick={handleDecrement}>-</button>
@@ -39,7 +39,7 @@ const onUpdate = async (id,qty) => {
       <button type='button' onClick={handleIncrement}>+</button>
       <button onClick={()=> onUpdate(book.id,quantity)}>Update Item</button>
     </div>
-    <h2>Price: ¥{book.price}</h2>
+    <h2 style={{ color: "DarkCyan" }}>Price: ¥{book.price}</h2>
     <button onClick={() => onClickFunc(book.id)}>Remove Item</button>
   </div>
   )

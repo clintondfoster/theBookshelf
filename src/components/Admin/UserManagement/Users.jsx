@@ -65,7 +65,7 @@ function Users() {
   );
 
   return (
-    <div>
+    <div style={{margin:'4px'}}>
       <h2>User Dashboard</h2>
       <h3>Welcome {currentUser.firstName}</h3>
       {isUserLoading && <p>Loading current user's data...</p>}
@@ -78,14 +78,14 @@ function Users() {
           <p>Admin Status: {currentUser.isAdmin}</p>
         </div>
       )}
-      ;
+      
       <UserSearchBar onSearch={handleSearch} />
       <UserList
         users={filteredUser}
         onPromote={handlePromoteToAdmin}
         onDelete={handleDelete}
       />
-      <AddUser />
+      {/* <AddUser /> */}
     </div>
   );
 }

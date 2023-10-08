@@ -1,15 +1,97 @@
-
 @media (min-width: 990px) {
-    .d-flex {
-        width: 1000px; 
-    }
+  .d-flex {
+    width: 1000px;
+  }
 }
 
-.logo:hover{
-    color: gainsboro;
-    cursor: pointer;
+.logo:hover {
+  color: gainsboro;
+  cursor: pointer;
 }
-*{
-    margin: 0;
-    box-sizing: border-box;
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#navbar {
+  position: fixed;
+  width: 100%;
+}
+
+.content {
+  padding-top: 50px;
+}
+
+.adminDash {
+  padding-top: 14px;
+}
+
+.bookContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: left;
+  align-items: left;
+  padding: 20px;
+}
+
+.cartContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  padding: 20px;
+}
+
+.bookCard {
+  box-sizing: border-box;
+  border-radius: 10px;
+  width: 330px;
+  height: auto;
+  margin-top: 20px;
+  margin-left: 15px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.checkoutBtn {
+  border: none;
+  background: #8fbe91;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  position: relative;
+  box-sizing: border-box;
+  transition: all 500ms ease;
+}
+
+.adminButton{
+  margin: 8px;
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  60%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+
+  80% {
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+}
+
+.checkoutBtn:hover {
+  animation: bounce 1s;
 }

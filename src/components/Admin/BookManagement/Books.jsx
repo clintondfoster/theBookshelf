@@ -5,20 +5,26 @@ import {
   useAddBookMutation,
   useDeleteBookMutation,
 } from "../../../reducers/api";
+import BookCard from "./BooksCard";
+import Button from 'react-bootstrap/Button';
 
 function Books() {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    //fetch books from api
-    //set them with setBooks()
-  }, []);
+  const { data, isLoading } = useGetBooksQuery();
+  console.log("book", data);
 
   return (
-    <div>
-      <SearchBar /* props and handlers */ />
-      {/* <AddbookForm /> */}
-      <BookList books={books} />
+<div>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : data.length === 0 ? (
+        <h1>No Books Found</h1>
+      ) : (
+        data.map((book) => (
+          <BookCard key={book.id} book={book} />
+        ))
+      )}
+      <Button variant="primary">Add New Book</Button>
     </div>
   );
 }
+export default Books;
