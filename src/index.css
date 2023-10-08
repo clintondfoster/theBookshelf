@@ -67,6 +67,10 @@
   transition: all 500ms ease;
 }
 
+.adminButton{
+  margin: 8px;
+}
+
 @keyframes bounce {
 
   0%,
