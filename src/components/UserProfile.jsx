@@ -71,14 +71,16 @@ function UserProfile() {
   const displayName = userData.firstName || userData.username;
 
   return (
-    <div className="content">
-      <h1>My Account</h1>
-      <h3>Welcome {displayName},</h3>
+    <div className="content" style={{
+      margin: '5px'
+    }}>
+      <h1> My Account</h1>
+      <h3 style={{color:'SeaGreen'}}>Welcome back {displayName}!</h3>
       {userData && (
-        <div className="user-info">
-          <h5>
+        <div  className="user-info">
+          <h5  style={{color:'RoyalBlue'}}>
             {formData.firstName || userData.firstName
-              ? "Your Profile"
+              ? "Your Profile Information"
               : "Update Your Profile Below"}
           </h5>
           {isUpdated && <p>Your profile updated successfully!</p>}
@@ -119,7 +121,8 @@ function UserProfile() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}> 
+      <h4 style={{color:'RoyalBlue'}}> Update Your Information</h4>
         <label>
           First Name
           <TextInput

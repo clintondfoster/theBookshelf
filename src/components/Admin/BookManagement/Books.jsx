@@ -7,18 +7,18 @@ import {
 } from "../../../reducers/api";
 
 function Books() {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    //fetch books from api
-    //set them with setBooks()
-  }, []);
+  const { data, isLoading } = useGetBooksQuery();
+  console.log("book", data);
 
   return (
     <div>
-      <SearchBar /* props and handlers */ />
-      {/* <AddbookForm /> */}
-      <BookList books={books} />
+      {data.map((i) => (
+        <div>
+          <h2>Title: {i.title}</h2>
+          <h2> by: {i.author}</h2>
+        </div>
+      ))}
     </div>
   );
 }
+export default Books;
