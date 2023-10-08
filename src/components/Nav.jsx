@@ -20,11 +20,7 @@ function NavBar() {
 
   // const user = useSelector((state) => state.auth.credentials.user || "");
 
-
-
-
-  const user = useSelector((state)=> state.auth.credentials || "")
-
+  const user = useSelector((state) => state.auth.credentials || "");
 
   const [logout] = useLogoutMutation();
 
@@ -64,7 +60,7 @@ function NavBar() {
   };
 
   return (
-    <Navbar expand="lg" bg="dark" variant="dark" className="navbar"   id="navbar">
+    <Navbar expand="lg" bg="dark" variant="dark" className="navbar" id="navbar">
       <Container fluid>
         <Navbar.Brand onClick={homeClick}>
           <div className="logo">The Bookshelf</div>
@@ -91,14 +87,14 @@ function NavBar() {
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
             <Nav.Link onClick={loginClick}>Login</Nav.Link>
-            {/* {currentUser.isAdmin && (
+            {currentUser.isAdmin && (
               <Nav.Link onClick={adminNavClick}>Admin Dashboard</Nav.Link>
-            )} */}
+            )}
             ;<Nav.Link onClick={orderClick}>My Order</Nav.Link>
             {/* <div> */}
-              {/* {user.token && <h4 id="welcome">Welcome {user.userId}</h4>} commented this out because it was causing size distortion in navbar */}
-              {/* {user.token && <button onClick={logout}>Logout</button>} */}
-              {user.token && <Nav.Link onClick={logout}>Logout</Nav.Link>}
+            {/* {user.token && <h4 id="welcome">Welcome {user.userId}</h4>} commented this out because it was causing size distortion in navbar */}
+            {/* {user.token && <button onClick={logout}>Logout</button>} */}
+            {user.token && <Nav.Link onClick={logout}>Logout</Nav.Link>}
             {/* </div> */}
           </Nav>
         </Navbar.Collapse>
