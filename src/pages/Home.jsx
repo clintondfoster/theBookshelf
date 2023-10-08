@@ -65,14 +65,14 @@ const Home = () => {
   // console.log(loggedIn);
 
   return (
-    <div style={{display: 'flex', flexWrap: 'wrap', 
-    flexDirection:'row',
-    justifyContent:'left',
-    alignItems:'left',
-    padding: '20px',
-
-    
-    }className="content"}>
+    <div style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+      justifyContent: 'left',
+      alignItems: 'left',
+      padding: '20px',
+    }} className="content">
       {isLoading ? (
         <h1>Loading...</h1>
       ) : data.length === 0 ? (
@@ -82,6 +82,7 @@ const Home = () => {
       )}
     </div>
   );
+  
 };
 
 export default Home;

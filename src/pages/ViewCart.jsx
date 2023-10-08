@@ -68,9 +68,12 @@ const ViewCart = () => {
       {loggedIn ? (
         <>
           <h2>Your Cart</h2>
+          <div className="bookContainer">
           {cart.map((i) => (
             <CartItemDB onClickFunc={onDelete} book={i}/>
           ))}
+          </div>
+      
           <h2>Total Price: ¥{totalPrice}</h2>
         </>
       ) : (
