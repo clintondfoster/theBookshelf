@@ -117,9 +117,9 @@ router.post('/', async (req, res, next) => {
   router.delete("/:id", async (req, res, next) => {
   
     try {
-      if (!req.user.admin) {
-        return res.status(403).send("Access denied. Admin only.");
-      }
+      // if (!req.user.admin) {
+      //   return res.status(403).send("Access denied. Admin only.");
+      // }
 
       const user = await prisma.users.delete({
         where: {

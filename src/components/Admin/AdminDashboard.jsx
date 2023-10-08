@@ -2,7 +2,7 @@ import React from "react";
 import AdminNavBar from "./AdminNavBar";
 import { Route, Routes } from "react-router-dom";
 import Users from "./UserManagement/Users";
-// import Books from "./BookManagement/Books";
+import Books from "./BookManagement/Books";
 
 function AdminDashboard() {
   return (
@@ -10,7 +10,7 @@ function AdminDashboard() {
       <AdminNavBar />
       <Routes>
         <Route path="/usermanagement/users" element={<Users />} />
-        {/* <Route path="/bookmanagement/books" element={<Books />} /> */}
+        <Route path="/bookmanagement/books" element={<Books />} />
       </Routes>
     </div>
   );

@@ -91,9 +91,9 @@ function NavBar() {
             <Nav.Link onClick={cartClick}>My Cart</Nav.Link>
             <Nav.Link onClick={accountClick}>My Account</Nav.Link>
             <Nav.Link onClick={loginClick}>Login</Nav.Link>
-            {currentUser.isAdmin && (
+            {/* {currentUser.isAdmin && (
               <Nav.Link onClick={adminNavClick}>Admin Dashboard</Nav.Link>
-            )}
+            )} */}
             ;<Nav.Link onClick={orderClick}>My Order</Nav.Link>
             {/* <div> */}
               {/* {user.token && <h4 id="welcome">Welcome {user.userId}</h4>} commented this out because it was causing size distortion in navbar */}

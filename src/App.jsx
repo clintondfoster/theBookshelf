@@ -54,7 +54,7 @@ function App() {
           <Route path={"/book/:id"} element={<SingleBook />} />
           <Route path={"/login"} element={<AuthForm />} />
           <Route path={"/cart"} element={<ViewCart />} />
-
+          <Route path={"/orderhistory"} element={<OrderHistory />} />
           {/* Authenticated Routes */}
           <Route
             path="/checkout"
