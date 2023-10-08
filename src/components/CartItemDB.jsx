@@ -31,7 +31,7 @@ const onUpdate = async (id,qty) => {
 
   return (
     <div className='bookCard'>
-    <h2 style={{ color: "DarkCyan" }}>Title:{book.title}</h2>
+    <h2 style={{ color: "DarkCyan" }}>{book.title}</h2>
     <RandomImage/> 
     <div className="input">
       <button onClick={handleDecrement}>-</button>
