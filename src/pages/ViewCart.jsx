@@ -61,7 +61,7 @@ const ViewCart = () => {
   //   setTotalPrice(newTotal)
   // }, [cart])
   const totalPrice = cart.reduce((acc, curr)=> acc + (curr.price * curr.quantity), 0)
-
+  const totalGuestPrice = guestCart.reduce((acc, curr)=> acc + (curr.price * curr.quantity), 0)
 
   return (
     <div className="content">
@@ -82,6 +82,7 @@ const ViewCart = () => {
           {guestCart.map((i) => (
             <CartItemLS onClickFunc={handleRemoveFromGuestCart} book={i}/>
           ))}
+          <h2>Total Price: ¥{totalGuestPrice}</h2>
         </>
       )}
       <section>
