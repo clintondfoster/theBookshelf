@@ -10,6 +10,7 @@ import { addToGuestCart } from "../reducers/guestSlice";
 import { useDispatch } from "react-redux";
 import Product from "./Product";
 
+
 const Home = () => {
   const { data, isLoading } = useGetBooksQuery();
   // console.log(data);
@@ -64,7 +65,14 @@ const Home = () => {
   // console.log(loggedIn);
 
   return (
-    <div className="content">
+    <div style={{display: 'flex', flexWrap: 'wrap', 
+    flexDirection:'row',
+    justifyContent:'left',
+    alignItems:'left',
+    padding: '20px',
+
+    
+    }className="content"}>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : data.length === 0 ? (
