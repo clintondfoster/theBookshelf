@@ -4,7 +4,7 @@ import { useGetOrderProductQuery, useGetBookByIdQuery } from "../reducers/api";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDeleteOrderProductMutation } from "../reducers/api";
-import { removeFromGuestCart } from "../reducers/guestSlice";
+import { removeFromGuestCart,clearGuestCart } from "../reducers/guestSlice";
 import { useDispatch } from "react-redux";
 import CartItemDB from "../components/CartItemDB";
 import CartItemLS from "../components/CartItemLS";
@@ -47,19 +47,13 @@ const ViewCart = () => {
     dispatch(removeFromGuestCart(bookId))
   }
 
-
-  // const [totalPrice, setTotalPrice] = useState(0)
-  // useEffect(()=> {
-  //   const calcTotal = (cart) => {
-  //     let result = 0; 
-  //     cart.forEach((book)=> {
-  //       result += book.price * book.quantity
-  //     })
-  //     return result
-  //   }
-  //   const newTotal = calcTotal(cart)
-  //   setTotalPrice(newTotal)
-  // }, [cart])
+  const handleClearCart = ()=>{
+    dispatch(clearGuestCart())
+    }
+    function CheckOutMsg() {
+    alert('You have sucessfully placed your order');
+    }
+    
   const totalPrice = cart.reduce((acc, curr)=> acc + (curr.price * curr.quantity), 0)
   const totalGuestPrice = guestCart.reduce((acc, curr)=> acc + (curr.price * curr.quantity), 0)
 
@@ -83,21 +77,15 @@ const ViewCart = () => {
             <CartItemLS onClickFunc={handleRemoveFromGuestCart} book={i}/>
           ))}
           <h2>Total Price: ¥{totalGuestPrice}</h2>
+          <button onClick={event =>{handleClearCart(); CheckOutMsg();}} >Guest Checkout</button>
         </>
       )}
       <section>
         <Link to="/home">Keep Shopping</Link>
       </section>
-      <section>
-        <Link to="/checkout">Checkout</Link>
-      </section>
+  
     </div>
   );
-  
-  
-  
-  
-  
   
 };
 
