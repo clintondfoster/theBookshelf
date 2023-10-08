@@ -71,7 +71,7 @@ function UserProfile() {
   const displayName = userData.firstName || userData.username;
 
   return (
-    <div>
+    <div className="content">
       <h1>My Account</h1>
       <h3>Welcome {displayName},</h3>
       {userData && (

@@ -72,7 +72,7 @@ const Home = () => {
     padding: '20px',
 
     
-    }}>
+    }className="content"}>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : data.length === 0 ? (

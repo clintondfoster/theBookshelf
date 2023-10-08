@@ -64,7 +64,7 @@ const ViewCart = () => {
 
 
   return (
-    <div>
+    <div className="content">
       {loggedIn ? (
         <>
           <h2>Your Cart</h2>

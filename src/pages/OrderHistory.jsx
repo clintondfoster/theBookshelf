@@ -5,7 +5,7 @@ const OrderHistory = () => {
   const { data, isLoading } = useGetOrderQuery();
   console.log(data);
   return (
-    <div>
+    <div className="content">
       {isLoading ? (
         <h1>loading....</h1>
       ) : (

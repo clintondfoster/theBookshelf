@@ -13,3 +13,20 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+#navbar{
+    position: fixed;
+    width: 100%;
+}
+
+.content{
+ padding-top: 50px;
+}
+
+.adminDash{
+ padding-top: 14px;
+}
+
+#welcome{
+    color: white;
+}

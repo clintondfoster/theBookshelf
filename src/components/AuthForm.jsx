@@ -61,7 +61,7 @@ function AuthForm() {
       }
 
       return (
-            <main>
+            <main  className="content">
               <h1>{authType}</h1>
               <form onSubmit={attemptAuth} name={authType}>
                 <label>

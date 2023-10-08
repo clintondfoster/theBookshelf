@@ -20,7 +20,7 @@ const Checkout = () => {
   };
 
   return (
-    <div>
+    <div className="content">
       <button onClick={onCreate}>Pay & Complete Order</button>
     </div>
   );
