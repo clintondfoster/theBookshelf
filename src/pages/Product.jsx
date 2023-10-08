@@ -34,24 +34,27 @@ function Product({ book }) {
     }
   };
   return (
-    <div>
-      <Link to={`/book/${book.id}`}>
-        <h2>{book.title}</h2>
+    <div style={{textAlign:'center'} }>
+      <div style={{boxSizing:'border-box',width:'330px', height: '450px', marginTop:'20px', marginLeft:'15px',boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)'}}>
+      <Link to={`/book/${book.id}`} style={{textDecoration:'none'}}>
+        <h2 style={{color:'CornflowerBlue'}}>{book.title}</h2>
       </Link>
       <RandomImage />
-      <h4>{book.author}</h4>
-      <p>{book.description}</p>
-      <p>¥{book.price}</p>
+      <h4 style={{color:'DarkCyan'}}>{book.author}</h4>
+      <p style={{color:'DarkCyan'}}>{book.description}</p>
+      <p style={{color:'DarkGreen'}}>¥{book.price}</p>
+      </div>
 
-      <div className="input">
-        <button type="button" onClick={handleDecrement}>
+      <div className="button"style={{display: 'flex', justifyContent:'center'
+    }} >
+        <button  onClick={handleDecrement}>
           -
         </button>
         <div>{quantity}</div>
-        <button type="button" onClick={handleIncrement}>
+        <button onClick={handleIncrement}>
           +
         </button>
-      </div>
+
       <button
         onClick={async () => {
           if (loggedIn) {
@@ -70,6 +73,7 @@ function Product({ book }) {
       >
         Add To Cart
       </button>
+      </div>
     </div>
   );
 }
