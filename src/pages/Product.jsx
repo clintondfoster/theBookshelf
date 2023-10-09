@@ -38,7 +38,7 @@ function Product({ book }) {
       <div
         style={{
           boxSizing: "border-box",
-          borderRadius: '20px',
+          borderRadius: "20px",
           width: "330px",
           height: "450px",
           marginTop: "20px",

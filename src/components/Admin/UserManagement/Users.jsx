@@ -8,12 +8,16 @@ import {
   useEditUserMutation,
 } from "../../../reducers/api";
 import { useMeQuery } from "../../../reducers/authSlice";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
 
 function Users() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: users = [], isLoading, isError } = useGetUsersQuery();
+  const { data: users = [], isLoading, isError, refetch } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [editUser] = useEditUserMutation();
+  const [showAddUserForm, setShowAddUserForm] = useState(false);
 
   console.log("In users - users", users);
   //meQuery for current user data
@@ -27,6 +31,14 @@ function Users() {
 
   const handleSearch = (term) => {
     setSearchTerm(term);
+  };
+
+  const toggleAddUserForm = () => {
+    setShowAddUserForm((prevShow) => !prevShow);
+  };
+
+  const handelUserAdded = () => {
+    setShowAddUserForm(false);
   };
 
   const handlePromoteToAdmin = async (userId) => {
@@ -65,27 +77,35 @@ function Users() {
   );
 
   return (
-    <div style={{margin:'4px'}}>
-      <h2>User Dashboard</h2>
-      <h3>Welcome {currentUser.firstName}</h3>
-      {isUserLoading && <p>Loading current user's data...</p>}
-      {isUserError && <p>Error fetching current user data.</p>}
-      {currentUser && (
-        <div>
-          <p>First Name: {currentUser.firstName}</p>
-          <p>Last Name: {currentUser.lastName}</p>
-          <p>Email: {currentUser.email}</p>
-          <p>Admin Status: {currentUser.isAdmin}</p>
-        </div>
-      )}
-      
-      <UserSearchBar onSearch={handleSearch} />
+    <div className="container mt-5">
+      <h2 className="display-4">User Accounts</h2>
+
+      <Alert variant="primary">Welcome, {currentUser.firstName}</Alert>
+
+      <Card className="mb-4">
+        <Card.Body>
+          <Card.Title>
+            {currentUser.firstName} {currentUser.lastName}
+          </Card.Title>
+          <Card.Text>Email: {currentUser.email}</Card.Text>
+          <Card.Text>Status: Admin</Card.Text>
+        </Card.Body>
+      </Card>
+
+      <div className="my-3">
+        <UserSearchBar onSearch={handleSearch} />
+      </div>
+
+      <Button variant="success" className="mb-3" onClick={toggleAddUserForm}>
+        {showAddUserForm ? "Hide Add User Form" : "Add User"}
+      </Button>
+      {showAddUserForm && <AddUser onUserAdded={handelUserAdded} />}
+
       <UserList
         users={filteredUser}
         onPromote={handlePromoteToAdmin}
         onDelete={handleDelete}
       />
-      {/* <AddUser /> */}
     </div>
   );
 }
