@@ -1,12 +1,17 @@
-function TextInput(props){
+function TextInput(props) {
+  const changed = (event) => {
+    props.chg(event.target.value);
+  };
 
-    const changed = (event)=>{
-        props.chg(event.target.value)
-    }
-
-    return(
-        <input placeholder={"..."} className={"textField"} value={props.vl} type={props.type} onChange={changed}/>
-    )
+  return (
+    <input
+      placeholder={props.placeholder || "..."}
+      className={`form-control ${props.className || ""}`}
+      value={props.vl}
+      type={props.type}
+      onChange={changed}
+    />
+  );
 }
 
 export default TextInput;
