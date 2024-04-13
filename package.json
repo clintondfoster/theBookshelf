@@ -18,8 +18,8 @@
     "@reduxjs/toolkit": "^1.9.6",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.2",
-    "concurrently": "^8.2.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",
@@ -39,6 +39,7 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.0.1",
+    "concurrently": "^8.2.2",
     "nodemon": "^2.0.22",
     "vite": "^4.0.4"
   }
